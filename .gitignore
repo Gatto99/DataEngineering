@@ -1,1 +1,4 @@
-./Homework2/lyrics/*
+./Homework2/lyrics/
+.idea
+.log
+.synctex.gz
