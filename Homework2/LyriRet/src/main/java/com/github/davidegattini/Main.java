@@ -3,15 +3,15 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
+import org.apache.lucene.analysis.custom.CustomAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -50,9 +50,10 @@ import org.apache.lucene.tests.analysis.TokenStreamToDot;
 public class Main {
     public static void main(String[] args) throws Exception{
 
-        // prendi la query da riga di comando o altro (sito web?)
+        // TODO: Correggi la sintassi della query e controlla gli analyzer
+        // todo: fai test su query
 
-        Query query = new MatchAllDocsQuery();
+        Query query = makeQuery();
 
         // Where to store Lucene index
         Path path = Paths.get("target/idx0");
@@ -66,6 +67,25 @@ public class Main {
                 directory.close();
             }
         }
+    }
+
+    private static Query makeQuery() throws Exception{
+        Scanner in = new Scanner(System.in);
+        System.out.println("What are you searching for?");
+        String userInput = in.nextLine();
+        userInput = userInput.trim();
+        System.out.println(userInput);
+        String[] splittedInput = userInput.split(": ");
+        String field = splittedInput[0];
+        String query = splittedInput[1];
+        System.out.println(field);
+        System.out.println(query);
+        Analyzer queryAnalyzer = CustomAnalyzer.builder()
+                        .withTokenizer(WhitespaceTokenizerFactory.class)
+                        .addTokenFilter(LowerCaseFilterFactory.class)
+                        .build();
+        QueryParser queryParser = new QueryParser(field, queryAnalyzer);
+        return queryParser.parse(query);
     }
 
     private static void runQuery(IndexSearcher searcher, Query query) throws Exception {
@@ -127,7 +147,6 @@ public class Main {
             }
         });
         if(lyricsTxts != null) {
-            int i = 0;
             for (File lyTxt : lyricsTxts) {
                 String filename = lyTxt.getName();
                 String content = readStringFromTxt(lyTxt.getPath());

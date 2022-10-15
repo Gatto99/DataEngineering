@@ -3,6 +3,7 @@ package com.github.davidegattini;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.tests.analysis.Token;
@@ -24,6 +25,15 @@ public class main {
     public void testEnglishAnalyzer() throws Exception{
         Analyzer enAnalyzer = new EnglishAnalyzer();
         TokenStream ts = enAnalyzer.tokenStream(null, "How to be an Engineer of content, please?");
+        StringWriter w = new StringWriter();
+        new TokenStreamToDot(null, ts, new PrintWriter(w)).toDot();
+        System.out.println(w);
+    }
+
+    @Test
+    public void testWhitespaceAnalyzer() throws Exception{
+        Analyzer whitespaceAnalyzer = new WhitespaceAnalyzer();
+        TokenStream ts = whitespaceAnalyzer.tokenStream(null, "How to be an Engineer of content, please?");
         StringWriter w = new StringWriter();
         new TokenStreamToDot(null, ts, new PrintWriter(w)).toDot();
         System.out.println(w);
