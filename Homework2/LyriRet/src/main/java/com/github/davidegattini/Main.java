@@ -14,6 +14,7 @@ import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
 import org.apache.lucene.analysis.custom.CustomAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
+import org.apache.lucene.analysis.miscellaneous.WordDelimiterGraphFilterFactory;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.codecs.Codec;
 import org.apache.lucene.codecs.simpletext.SimpleTextCodec;
@@ -48,16 +49,17 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.tests.analysis.TokenStreamToDot;
 
 public class Main {
+    private static String FILENAME = "filename";
+    private static String CONTENT = "content";
+    private static String LUCENE_IDX = "target/idx0";
+    private static String LYRICS_PATH = "../lyrics/";
     public static void main(String[] args) throws Exception{
-
-        // TODO: Correggi la sintassi della query e controlla gli analyzer
-        // todo: fai test su query
 
         Query query = makeQuery();
 
         // Where to store Lucene index
-        Path path = Paths.get("target/idx0");
-        // Create Lucene directory 4 r/w access on Lucene index
+        Path path = Paths.get(LUCENE_IDX);
+        // Create Lucene directory for r/w access on Lucene index
         try (Directory directory = FSDirectory.open(path)){
             indexDocs(directory, new SimpleTextCodec());
             try (IndexReader reader = DirectoryReader.open((directory))){
@@ -70,19 +72,31 @@ public class Main {
     }
 
     private static Query makeQuery() throws Exception{
+        String field = "";
+        String[] splittedInput = {};
+        String userInput = "";
+        boolean isValidField = false;
+
         Scanner in = new Scanner(System.in);
-        System.out.println("What are you searching for?");
-        String userInput = in.nextLine();
-        userInput = userInput.trim();
-        System.out.println(userInput);
-        String[] splittedInput = userInput.split(": ");
-        String field = splittedInput[0];
-        String query = splittedInput[1];
-        System.out.println(field);
-        System.out.println(query);
+        do {
+            System.out.println("What are you searching for?");
+            userInput = in.nextLine();
+            splittedInput = userInput.split(":");
+            field = splittedInput[0].trim();
+            isValidField = field.equals(FILENAME) || field.equals(CONTENT);
+            if(!isValidField) {
+                System.out.println("First word must be \"filename\" or \"content\"");
+            }
+        } while (!isValidField);
+        in.close();
+        String query = splittedInput[1].trim();
+        System.out.println("INPUT: " + userInput);
+        System.out.println("SEARCHED FIELD: " + field);
+        System.out.println("SEARCHED QUERY: " + query);
         Analyzer queryAnalyzer = CustomAnalyzer.builder()
                         .withTokenizer(WhitespaceTokenizerFactory.class)
                         .addTokenFilter(LowerCaseFilterFactory.class)
+                        .addTokenFilter(WordDelimiterGraphFilterFactory.class)
                         .build();
         QueryParser queryParser = new QueryParser(field, queryAnalyzer);
         return queryParser.parse(query);
@@ -105,54 +119,41 @@ public class Main {
         }
     }
 
-    /* indicizzo i documenti nella cartella (./lyrics/*)
-     * considerando due campi (quindi due indici):
-     * - uno per il nome del file
-     * - contenuto del file
-     * e utilizza due analyzer
-     */
-
-    private static void indexDocs(Directory dir, Codec codec) throws Exception{
-        // Title's analyzer
-        // minuscole e divisioni parole per spazion bianco
+    private static void indexDocs(Directory luceneDir, Codec codec) throws Exception{
+        // Title's analyzer = StandardAnalyzer
+        // {Tokenizer: Whitespace; TokenFilter: delimiter, lowercase, stopwords}
         CharArraySet stopWords = new CharArraySet(Arrays.asList("of", "an", "a", "the", "for"), true);
         Analyzer defaultAnalyzer = new StandardAnalyzer(stopWords);
-        // Content's analyzer
-        // minuscole, divisioni parole con spazio bianco
-        // no stopwords e stemming
+        // Content's analyzer = EnglishAnalyzer
+        // {Tokenizer: Whitespace; TokenFilter: stemming, lowercase, stopwords, english possessive, set keyword marker}
         Analyzer enAnalyzer = new EnglishAnalyzer();
 
         Map<String, Analyzer> perFieldAnalyzer = new HashMap<>();
-        perFieldAnalyzer.put("filename", defaultAnalyzer);
-        perFieldAnalyzer.put("content", enAnalyzer);
+        perFieldAnalyzer.put(FILENAME, defaultAnalyzer);
+        perFieldAnalyzer.put(CONTENT, enAnalyzer);
         Analyzer analyzer = new PerFieldAnalyzerWrapper(defaultAnalyzer, perFieldAnalyzer);
 
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         if(codec != null){
             config.setCodec(codec);
         }
-        IndexWriter writer = new IndexWriter(dir, config);
+        IndexWriter writer = new IndexWriter(luceneDir, config);
         writer.deleteAll();
 
         // ciclo per tutti i documenti trasformando:
         // il nome del file      -> TextField = filename
         // il contenuto del file -> TextField = content
-        // todo: cambia il path
-        String path = "../lyrics/Coldplay";
-        File lyricsDirectory = new File(path);
-        File[] lyricsTxts = lyricsDirectory.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                return !file.isHidden();
-            }
-        });
+
+        List<File> lyricsTxts = new ArrayList<>();
+        listAllFileOfDirectory(LYRICS_PATH, lyricsTxts);
+
         if(lyricsTxts != null) {
             for (File lyTxt : lyricsTxts) {
                 String filename = lyTxt.getName();
                 String content = readStringFromTxt(lyTxt.getPath());
                 Document doc = new Document();
-                doc.add(new TextField("filename", filename, Field.Store.YES));
-                doc.add(new TextField("content", content, Field.Store.YES));
+                doc.add(new TextField(FILENAME, filename, Field.Store.YES));
+                doc.add(new TextField(CONTENT, content, Field.Store.YES));
 
                 writer.addDocument(doc);
             }
@@ -161,8 +162,25 @@ public class Main {
         writer.close();
     }
 
+    public static void listAllFileOfDirectory(String directoryName, List<File> files) {
+        File directory = new File(directoryName);
+
+        // Get all files from a directory.
+        File[] fList = directory.listFiles();
+        if(fList != null)
+            for (File file : fList) {
+                if(!file.isHidden()){
+                    if (file.isFile()) {
+                        files.add(file);
+                    } else if (file.isDirectory()) {
+                        listAllFileOfDirectory(file.getAbsolutePath(), files);
+                    }
+                }
+            }
+    }
+
     private static String readStringFromTxt(String pathFile) throws Exception{
-        System.out.println(pathFile);
+        //System.out.println(pathFile);
         Path filePath = Path.of(pathFile);
         String content = Files.readString(filePath);
         content = content.replace("\n", " ");
