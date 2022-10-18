@@ -48,6 +48,24 @@ public class AnalayzerTest {
         System.out.println(w);
     }
 
+    @Test
+    public void testStandardAnalyzerWithDash() throws Exception{
+        Analyzer standardAnalyzer = new StandardAnalyzer();
+        TokenStream ts = standardAnalyzer.tokenStream(null, "How to access: wi-fi, please?");
+        StringWriter w = new StringWriter();
+        new TokenStreamToDot(null, ts, new PrintWriter(w)).toDot();
+        System.out.println(w);
+    }
+
+    @Test
+    public void testStandardAnalyzerUnited() throws Exception{
+        Analyzer standardAnalyzer = new StandardAnalyzer();
+        TokenStream ts = standardAnalyzer.tokenStream(null, "Thequickbrownfoxcan'tJump32.3feetright");
+        StringWriter w = new StringWriter();
+        new TokenStreamToDot(null, ts, new PrintWriter(w)).toDot();
+        System.out.println(w);
+    }
+
     // Quando si usano le stop words, si sostituiscono con "." (per le phrase query)
     @Test
     public void testStandardAnalyzerWithStopWords() throws Exception{

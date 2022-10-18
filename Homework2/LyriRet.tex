@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{multirow}
+\usepackage{multicol}
+
+\title{IDD: Homework2}
+\author{Davide Gattini}
+\date{October 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Analyzers}
+Per il campo \textit{filename} si è scelto l'uso di un \textit{StandardAnalyzer} così caratterizzato:
+\begin{itemize}
+	\item Tokenizer
+	\begin{itemize}
+		\item WhiteSpaceTokenizer
+	\end{itemize}
+	\item Token filter
+	\begin{itemize}
+		\item LowerCaseFilter
+		\item WordDelimiterGraphFilter
+	\end{itemize}
+\end{itemize}
+
+La scelta deriva dalla volontà di permettere all'utente la ricerca delle canzoni tramite il loro titolo, ignorando che quest'ultimo possa contenere lettere maiuscole e/o una punteggiature, infatti colui che ricerca i titoli delle canzoni si suppone lo faccia senza pensare a questi dettagli e qualora non si facessero queste considerazioni, i documenti cui titoli hanno punteggiatura o maiuscole, non verranno trovati dal programma a meno che l'utente non sappia dove esse si trovano.
+
+Anche per il campo \textit{content} viene applicato lo \textit{StandardAnalyzer}:
+\begin{itemize}
+	\item Tokenizer
+	\begin{itemize}
+		\item WhiteSpaceTokenizer
+	\end{itemize}
+	\item Token filter
+	\begin{itemize}
+		\item LowerCaseFilter
+		\item WordDelimiterGraphFilter
+		\item Stop words = \{\textit{of}, \textit{an}, \textit{a}, \textit{the}, \textit{for}\}
+	\end{itemize}
+\end{itemize}
+
+L'adozione di un analyzer di questo tipo per il lyrics delle canzoni nel corpus, permette di evitare l'indicizzazione di termini molto comuni che saranno ignorati in fase di ricerca poiché si punta ad offrire all'utente il maggior numero possibile di documenti, garantendo efficienza nell'indicizzazione. Inoltre non pensiamo alle maiuscole, né tanto meno ai vari delimitatori e alla punteggiatura per evitare che ne sia richiesta conoscenza a chi esegue la ricerca. Quindi ciò che è stato detto per il titolo, vale anche per il testo.
+
+Infine per la \textbf{query}, poiché si è usato il query parser, è stato necessario utilizzare un ulteriore analyzer e la scelta è ricaduta sempre sullo \textbf{StandardAnalyzer}, per cui non sono state definite delle stop word per permettere all'utente di inserire una phrase query contenente questi termini qualora ricordasse il titolo della canzone di cui vuole leggere il testo.
+
+\section{File indicizzati e tempi di indicizzazione}
+I file che sono stati indicizzati sono stati recuperati tramite l'uso dell'API \textit{lyricsGenius}, la quale, tramite uno script python, ha permesso l'estrazione e il salvataggio dei testi delle 100 canzoni più popolari dei Coldplay. Di conseguenza, il nome di ogni file corrisponde al nome della canzone a cui sono stati eliminati i caratteri speciali ed il lyrics associato è stato invece salvato in formato testuale.
+\begingroup
+\setlength{\tabcolsep}{5pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+\begin{center}
+\begin{table}[h!]
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    \multicolumn{10}{|c|}{Tempo d'indicizzazione per i-esima esecuzione}\\
+    \hline
+    1° & 2° & 3° & 4° & 5° & 6° & 7° & 8° & 9° & 10° \\
+    \hline
+        $414ms$ & $336ms$ & $372ms$ & $332ms$ & $357ms$ & $363ms$ & $331ms$ & $336ms$ & $359ms$ & $369ms$ \\
+    \hline
+    \end{tabular}
+    \caption{In questa tabella sono stati riportati i tempi impiegati dal programma per indicizzare i documenti nel corpus. Si ha una media di $\sim{357ms}$.}
+    \label{tab:my_label}
+\end{table}
+\end{center}
+\endgroup
+
+\section{Query testate}
+\begin{itemize}
+    \item \textit{filename: "A Sky Full Of Stars"}
+    \item \textit{filename: "a sky full of stars"}
+    \item \textit{filename: -sky +full}
+    \item \textit{filename: LOVE}
+    \item \textit{filename: The Scie}
+    \item \textit{content: "love you"}
+    \item \textit{content: fix}
+    \item \textit{content: "Everything you want a dream away"}
+    \item \textit{content: "I could not stop that you now know"}
+    \item \textit{content: I could not stop}
+\end{itemize}
+
+\end{document}
