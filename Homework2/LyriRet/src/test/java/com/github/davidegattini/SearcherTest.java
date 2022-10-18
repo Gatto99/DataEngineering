@@ -9,13 +9,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-public class QueryTest {
+public class SearcherTest {
 
     /* PQ = Phrase query
     *  ...*/
 
     private Indexer idx;
-    private Query query;
+    private Searcher searcher;
 
     private final InputStream systemIn = System.in;
     private final PrintStream systemOut = System.out;
