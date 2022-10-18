@@ -1,9 +1,15 @@
 package com.github.davidegattini;
 
+import com.github.davidegattini.FileUtility;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
+import org.apache.lucene.analysis.custom.CustomAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
+import org.apache.lucene.analysis.miscellaneous.WordDelimiterGraphFilterFactory;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.codecs.Codec;
 import org.apache.lucene.codecs.simpletext.SimpleTextCodec;
@@ -16,6 +22,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Time;
@@ -27,37 +34,49 @@ public class Indexer {
     private static String LUCENE_IDX = "target/idx0";
     private static String LYRICS_PATH = "../lyrics/";
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) {
+        runIndexing();
+    }
+
+    public static void runIndexing() {
         // Where to store Lucene index
         Path path = Paths.get(LUCENE_IDX);
         // Create Lucene directory for r/w access on Lucene index
         try (Directory directory = FSDirectory.open(path)){
             long i = System.currentTimeMillis();
-            indexDocs(directory, new SimpleTextCodec());
+            try {
+                indexDocs(directory, new SimpleTextCodec());
+            } catch (Exception e) {
+                System.out.println("Error occured during documents' indexing " + e.getMessage());
+            }
             long j = System.currentTimeMillis() - i;
             System.out.println("Indexing time: " + j + " ms");
-
+        } catch (IOException ioe) {
+            System.out.println("Failed to open directory " + path + "\n" + ioe.getMessage());
         }
     }
 
+
     private static void indexDocs(Directory luceneDir, Codec codec) throws Exception{
-        // Title's analyzer = StandardAnalyzer
-        // {Tokenizer: Whitespace; TokenFilter: delimiter, lowercase, stopwords}
+        // Title's analyzer
+        Analyzer filenameAnalyzer = CustomAnalyzer.builder()
+                .withTokenizer(WhitespaceTokenizerFactory.class)
+                .addTokenFilter(WordDelimiterGraphFilterFactory.class)
+                .addTokenFilter(LowerCaseFilterFactory.class).build();
+        // Content's analyzer
         CharArraySet stopWords = new CharArraySet(Arrays.asList("of", "an", "a", "the", "for"), true);
-        Analyzer defaultAnalyzer = new StandardAnalyzer(stopWords);
-        // Content's analyzer = EnglishAnalyzer
-        // {Tokenizer: Whitespace; TokenFilter: stemming, lowercase, stopwords, english possessive, set keyword marker}
-        Analyzer enAnalyzer = new EnglishAnalyzer();
+        Analyzer standardAnalyzer= new StandardAnalyzer(stopWords);
 
         Map<String, Analyzer> perFieldAnalyzer = new HashMap<>();
-        perFieldAnalyzer.put(FILENAME, defaultAnalyzer);
-        perFieldAnalyzer.put(CONTENT, enAnalyzer);
-        Analyzer analyzer = new PerFieldAnalyzerWrapper(defaultAnalyzer, perFieldAnalyzer);
+        perFieldAnalyzer.put(FILENAME, filenameAnalyzer);
+        perFieldAnalyzer.put(CONTENT, standardAnalyzer);
+        Analyzer analyzer = new PerFieldAnalyzerWrapper(standardAnalyzer, perFieldAnalyzer);
 
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         if(codec != null){
             config.setCodec(codec);
         }
+
         IndexWriter writer = new IndexWriter(luceneDir, config);
         writer.deleteAll();
 

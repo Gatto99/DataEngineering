@@ -15,3 +15,6 @@ Si noti che per eseguire una query è necessario che l'utente inserisca prima il
 Di seguito degli esempi: 
 - *filename: Full*
 - *content: "stars"*
+
+### Tecnologie e versioni
+<!--TODO-->

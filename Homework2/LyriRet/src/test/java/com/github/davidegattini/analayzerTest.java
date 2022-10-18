@@ -29,7 +29,7 @@ public class analayzerTest {
     @Test
     public void testEnglishAnalyzer() throws Exception{
         Analyzer enAnalyzer = new EnglishAnalyzer();
-        TokenStream ts = enAnalyzer.tokenStream(null, "How to be an Engineer of content, please?");
+        TokenStream ts = enAnalyzer.tokenStream(null, "Everything you want's a dream away");
         StringWriter w = new StringWriter();
         new TokenStreamToDot(null, ts, new PrintWriter(w)).toDot();
         System.out.println(w);
@@ -46,14 +46,14 @@ public class analayzerTest {
 
     @Test
     public void testStandardAnalyzer() throws Exception{
-        Analyzer enAnalyzer = new StandardAnalyzer();
-        TokenStream ts = enAnalyzer.tokenStream(null, "How to be an Engineer of data, please?");
+        Analyzer standardAnalyzer = new StandardAnalyzer();
+        TokenStream ts = standardAnalyzer.tokenStream(null, "How to be an Engineer of data, please?");
         StringWriter w = new StringWriter();
         new TokenStreamToDot(null, ts, new PrintWriter(w)).toDot();
         System.out.println(w);
     }
 
-    // Quando si usano le stop words, si sostituiscono con "."
+    // Quando si usano le stop words, si sostituiscono con "." (per le phrase query)
     @Test
     public void testStandardAnalyzerWithStopWords() throws Exception{
         CharArraySet stopWords = new CharArraySet(Arrays.asList("of", "an", "a", "the", "for"), true);

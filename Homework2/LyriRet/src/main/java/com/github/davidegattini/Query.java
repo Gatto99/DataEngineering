@@ -7,6 +7,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
 import org.apache.lucene.analysis.custom.CustomAnalyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.WordDelimiterGraphFilterFactory;
 import org.apache.lucene.codecs.simpletext.SimpleTextCodec;
 import org.apache.lucene.document.Document;
@@ -38,7 +39,7 @@ public class Query {
         }
     }
 
-    private static org.apache.lucene.search.Query makeQuery() throws Exception{
+    public static org.apache.lucene.search.Query makeQuery() throws Exception{
         String field = "";
         String[] splittedInput = {};
         String userInput = "";
@@ -62,8 +63,8 @@ public class Query {
         System.out.println("SEARCHED QUERY: " + query);
         Analyzer queryAnalyzer = CustomAnalyzer.builder()
                         .withTokenizer(WhitespaceTokenizerFactory.class)
-                        .addTokenFilter(LowerCaseFilterFactory.class)
                         .addTokenFilter(WordDelimiterGraphFilterFactory.class)
+                        .addTokenFilter(LowerCaseFilterFactory.class)
                         .build();
         QueryParser queryParser = new QueryParser(field, queryAnalyzer);
         return queryParser.parse(query);
