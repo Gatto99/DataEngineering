@@ -3,13 +3,13 @@ package com.github.davidegattini;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
-import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
+import org.apache.lucene.analysis.core.*;
 import org.apache.lucene.analysis.custom.CustomAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.en.EnglishPossessiveFilterFactory;
 import org.apache.lucene.analysis.miscellaneous.WordDelimiterGraphFilterFactory;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.apache.lucene.tests.analysis.TokenStreamToDot;
 import org.junit.Test;
 
@@ -78,13 +78,35 @@ public class AnalayzerTest {
     }
 
     @Test
-    public void testQueryPasers() throws Exception{
-        Analyzer queryAnalyzer = CustomAnalyzer.builder()
-                .withTokenizer(WhitespaceTokenizerFactory.class)
+    public void testStandardHasNotEnglishPossesiveFilter() throws Exception{
+        Analyzer stAnalyzer = new StandardAnalyzer();
+        TokenStream ts = stAnalyzer.tokenStream(null, "How to be a data's Engineer, please?");
+        StringWriter w = new StringWriter();
+        new TokenStreamToDot(null, ts, new PrintWriter(w)).toDot();
+        System.out.println(w);
+    }
+
+    @Test
+    public void testEnglishPossesiveFilter() throws Exception{
+        Analyzer epAnalyzer = CustomAnalyzer.builder()
+                                .withTokenizer(StandardTokenizerFactory.class)
+                                .addTokenFilter(LowerCaseFilterFactory.class)
+                                .addTokenFilter(EnglishPossessiveFilterFactory.class).build();
+        TokenStream ts = epAnalyzer.tokenStream(null, "How to be a data's Engineer, please?");
+        StringWriter w = new StringWriter();
+        new TokenStreamToDot(null, ts, new PrintWriter(w)).toDot();
+        System.out.println(w);
+    }
+
+    @Test
+    public void testCustomAnalyzerWithStopFilter() throws Exception{
+        CharArraySet stopset = StopFilter.makeStopSet(Arrays.asList("of", "an", "a", "the", "for"));
+        Analyzer epAnalyzer = CustomAnalyzer.builder()
+                .withTokenizer(StandardTokenizerFactory.class)
                 .addTokenFilter(LowerCaseFilterFactory.class)
-                .addTokenFilter(WordDelimiterGraphFilterFactory.class)
-                .build();
-        TokenStream ts = queryAnalyzer.tokenStream(null, "How to be an Engineer of data, please?");
+                .addTokenFilter(StopFilterFactory.class,  "ignoreCase", "false", "words", "stopwords.txt", "format", "wordset")
+                .addTokenFilter(EnglishPossessiveFilterFactory.class).build();
+        TokenStream ts = epAnalyzer.tokenStream(null, "How to be a data's Engineer, please?");
         StringWriter w = new StringWriter();
         new TokenStreamToDot(null, ts, new PrintWriter(w)).toDot();
         System.out.println(w);

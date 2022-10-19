@@ -4,13 +4,16 @@ import com.github.davidegattini.FileUtility;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.StopFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
 import org.apache.lucene.analysis.custom.CustomAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.en.EnglishPossessiveFilterFactory;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.miscellaneous.WordDelimiterGraphFilterFactory;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.apache.lucene.codecs.Codec;
 import org.apache.lucene.codecs.simpletext.SimpleTextCodec;
 import org.apache.lucene.document.Document;
@@ -59,17 +62,18 @@ public class Indexer {
 
     private static void indexDocs(Directory luceneDir, Codec codec) throws Exception{
         // Title's analyzer
-        Analyzer filenameAnalyzer = CustomAnalyzer.builder()
-                .withTokenizer(WhitespaceTokenizerFactory.class)
-                .addTokenFilter(WordDelimiterGraphFilterFactory.class)
-                .addTokenFilter(LowerCaseFilterFactory.class).build();
+        Analyzer standardAnalyzer = new StandardAnalyzer();
         // Content's analyzer
         CharArraySet stopWords = new CharArraySet(Arrays.asList("of", "an", "a", "the", "for"), true);
-        Analyzer standardAnalyzer= new StandardAnalyzer(stopWords);
+        Analyzer contentAnalyzer= CustomAnalyzer.builder()
+                .withTokenizer(StandardTokenizerFactory.class)
+                .addTokenFilter(LowerCaseFilterFactory.class)
+                .addTokenFilter(StopFilterFactory.class, "ignoreCase", "false", "words", "stopwords.txt", "format", "wordset")
+                .addTokenFilter(EnglishPossessiveFilterFactory.class).build();
 
         Map<String, Analyzer> perFieldAnalyzer = new HashMap<>();
-        perFieldAnalyzer.put(FILENAME, filenameAnalyzer);
-        perFieldAnalyzer.put(CONTENT, standardAnalyzer);
+        perFieldAnalyzer.put(FILENAME, standardAnalyzer);
+        perFieldAnalyzer.put(CONTENT, contentAnalyzer);
         Analyzer analyzer = new PerFieldAnalyzerWrapper(standardAnalyzer, perFieldAnalyzer);
 
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
