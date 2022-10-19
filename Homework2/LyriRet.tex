@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{multirow}
 \usepackage{multicol}
+\usepackage{hyperref}
 
 \title{IDD: Homework2}
 \author{Davide Gattini}
@@ -16,37 +17,38 @@ Per il campo \textit{filename} si è scelto l'uso di un \textit{StandardAnalyzer
 \begin{itemize}
 	\item Tokenizer
 	\begin{itemize}
-		\item WhiteSpaceTokenizer
+		\item StandardTokenizer
 	\end{itemize}
 	\item Token filter
 	\begin{itemize}
 		\item LowerCaseFilter
-		\item WordDelimiterGraphFilter
 	\end{itemize}
 \end{itemize}
 
-La scelta deriva dalla volontà di permettere all'utente la ricerca delle canzoni tramite il loro titolo, ignorando che quest'ultimo possa contenere lettere maiuscole e/o una punteggiature, infatti colui che ricerca i titoli delle canzoni si suppone lo faccia senza pensare a questi dettagli e qualora non si facessero queste considerazioni, i documenti cui titoli hanno punteggiatura o maiuscole, non verranno trovati dal programma a meno che l'utente non sappia dove esse si trovano.
+La scelta deriva dalla volontà di permettere all'utente la ricerca delle canzoni tramite il loro titolo, ignorando che quest'ultimo possa contenere lettere maiuscole e/o una punteggiature, infatti colui che ricerca i titoli delle canzoni si suppone lo faccia senza pensare a questi dettagli \begin{comment}e qualora non si facessero queste considerazioni, i documenti cui titoli hanno punteggiatura o maiuscole, non verranno trovati dal programma a meno che l'utente non sappia dove esse si trovano. \end{comment}
 
-Anche per il campo \textit{content} viene applicato lo \textit{StandardAnalyzer}:
+Anche per il campo \textit{content} viene applicato lo \textit{CustomAnalyzer}:
 \begin{itemize}
 	\item Tokenizer
 	\begin{itemize}
-		\item WhiteSpaceTokenizer
+		\item StandardTokenizer
 	\end{itemize}
 	\item Token filter
 	\begin{itemize}
 		\item LowerCaseFilter
-		\item WordDelimiterGraphFilter
-		\item Stop words = \{\textit{of}, \textit{an}, \textit{a}, \textit{the}, \textit{for}\}
+		\item StopFilter (stop words = \{\textit{of}, \textit{an}, \textit{a}, \textit{the}, \textit{for}\})
+        \item EnglishPossessiveFilter
 	\end{itemize}
 \end{itemize}
 
-L'adozione di un analyzer di questo tipo per il lyrics delle canzoni nel corpus, permette di evitare l'indicizzazione di termini molto comuni che saranno ignorati in fase di ricerca poiché si punta ad offrire all'utente il maggior numero possibile di documenti, garantendo efficienza nell'indicizzazione. Inoltre non pensiamo alle maiuscole, né tanto meno ai vari delimitatori e alla punteggiatura per evitare che ne sia richiesta conoscenza a chi esegue la ricerca. Quindi ciò che è stato detto per il titolo, vale anche per il testo.
+L'adozione di un analyzer di questo tipo per il lyrics delle canzoni nel corpus, permette di evitare l'indicizzazione di termini molto comuni che saranno ignorati in fase di ricerca poiché si punta ad offrire all'utente il maggior numero possibile di documenti, garantendo efficienza nell'indicizzazione. Inoltre non pensiamo alle maiuscole, né tanto meno ai vari delimitatori e alla punteggiatura per evitare che ne sia richiesta conoscenza a chi esegue la ricerca. Quindi ciò che è stato detto per il titolo, vale anche per il testo. Lo metto nel contenuto e non nella query perché si suppone vengano usate nella query qualora l utente si ricordasse tutto per bene.
+L'ultima considerazione riguarda la presenza di un filtro per il genitivo sassone che viene filtrato poiché è stato considerato come un dettaglio da poter trascurare e quindi non indicizzare.
 
-Infine per la \textbf{query}, poiché si è usato il query parser, è stato necessario utilizzare un ulteriore analyzer e la scelta è ricaduta sempre sullo \textbf{StandardAnalyzer}, per cui non sono state definite delle stop word per permettere all'utente di inserire una phrase query contenente questi termini qualora ricordasse il titolo della canzone di cui vuole leggere il testo.
+Infine per la \textit{query}, poiché si è usato il query parser, è stato necessario utilizzare un ulteriore analyzer e la scelta è ricaduta sempre su di un \textit{StandardAnalyzer}.
+Da sottolineare che non sono state definite delle stop word, così da permettere all'utente di inserire una phrase query contenente questi termini che quindi vengono indicizzate, così considerate qualora si ricordasse il titolo della canzone di cui vuole leggere il testo. Si suppone infatti, che il titolo cercato sia più facile da ricordare, quindi è possibile che vengano inserite potenziali stop word da non ignorare. Mentre per il contenuto, grazie al relativo analyzer, queste, sebbene indicizzate dalla query, non troveranno una corrispondenza nel testo indicizzato di una canzone (se appartenenti all'insieme di stop word definito sopra), soddisfacendo l'obiettivo definito precedentemente, cioè quello di permettere il retrieval di più documenti possibili in questo caso.
 
-\section{File indicizzati e tempi di indicizzazione}
-I file che sono stati indicizzati sono stati recuperati tramite l'uso dell'API \textit{lyricsGenius}, la quale, tramite uno script python, ha permesso l'estrazione e il salvataggio dei testi delle 100 canzoni più popolari dei Coldplay. Di conseguenza, il nome di ogni file corrisponde al nome della canzone a cui sono stati eliminati i caratteri speciali ed il lyrics associato è stato invece salvato in formato testuale.
+\section{File indicizzati e tempo di indicizzazione}
+I file che sono stati indicizzati sono stati recuperati tramite l'uso dell'API \href{https://lyricsgenius.readthedocs.io/en/master/}{\textit{lyricsGenius}}, la quale, tramite uno script python, ha permesso l'estrazione e il salvataggio dei testi delle 100 canzoni più popolari dei Coldplay. Di conseguenza, il nome di ogni file corrisponde al nome della canzone a cui sono stati eliminati i caratteri speciali ed il lyrics associato è stato invece salvato in formato testuale.
 \begingroup
 \setlength{\tabcolsep}{5pt} % Default value: 6pt
 \renewcommand{\arraystretch}{1.5} % Default value: 1
@@ -58,27 +60,32 @@ I file che sono stati indicizzati sono stati recuperati tramite l'uso dell'API \
     \hline
     1° & 2° & 3° & 4° & 5° & 6° & 7° & 8° & 9° & 10° \\
     \hline
-        $414ms$ & $336ms$ & $372ms$ & $332ms$ & $357ms$ & $363ms$ & $331ms$ & $336ms$ & $359ms$ & $369ms$ \\
+        $49ms$ & $50ms$ & $47ms$ & $46ms$ & $43ms$ & $44ms$ & $41ms$ & $39ms$ & $42ms$ & $45ms$ \\
     \hline
     \end{tabular}
     \caption{In questa tabella sono stati riportati i tempi impiegati dal programma per indicizzare i documenti nel corpus. Si ha una media di $\sim{357ms}$.}
-    \label{tab:my_label}
 \end{table}
 \end{center}
 \endgroup
 
 \section{Query testate}
-\begin{itemize}
-    \item \textit{filename: "A Sky Full Of Stars"}
-    \item \textit{filename: "a sky full of stars"}
-    \item \textit{filename: -sky +full}
-    \item \textit{filename: LOVE}
-    \item \textit{filename: The Scie}
-    \item \textit{content: "love you"}
-    \item \textit{content: fix}
-    \item \textit{content: "Everything you want a dream away"}
-    \item \textit{content: "I could not stop that you now know"}
-    \item \textit{content: I could not stop}
-\end{itemize}
+\textit{filename: "A Sky Full Of Stars"}
 
+\textit{filename: "a sky full of stars"}
+
+\textit{filename: -sky +full}
+
+\textit{filename: LOVE}
+
+\textit{filename: The Scie}
+
+\textit{content: "love you"}
+
+\textit{content: fix}
+
+\textit{content: "Everything you want"}
+
+\textit{content: want's dream}
+
+\textit{content: I could not stop}
 \end{document}
