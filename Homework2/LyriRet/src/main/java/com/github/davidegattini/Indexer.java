@@ -46,25 +46,20 @@ public class Indexer {
         Path path = Paths.get(LUCENE_IDX);
         // Create Lucene directory for r/w access on Lucene index
         try (Directory directory = FSDirectory.open(path)){
-            long i = System.currentTimeMillis();
             try {
                 indexDocs(directory, new SimpleTextCodec());
             } catch (Exception e) {
                 System.out.println("Error occured during documents' indexing " + e.getMessage());
             }
-            long j = System.currentTimeMillis() - i;
-            System.out.println("Indexing time: " + j + " ms");
         } catch (IOException ioe) {
             System.out.println("Failed to open directory " + path + "\n" + ioe.getMessage());
         }
     }
 
-
     private static void indexDocs(Directory luceneDir, Codec codec) throws Exception{
         // Title's analyzer
         Analyzer standardAnalyzer = new StandardAnalyzer();
         // Content's analyzer
-        CharArraySet stopWords = new CharArraySet(Arrays.asList("of", "an", "a", "the", "for"), true);
         Analyzer contentAnalyzer= CustomAnalyzer.builder()
                 .withTokenizer(StandardTokenizerFactory.class)
                 .addTokenFilter(LowerCaseFilterFactory.class)
@@ -89,20 +84,24 @@ public class Indexer {
         // il contenuto del file -> TextField = content
 
         FileUtility futils = new FileUtility();
-        List<File> lyricsTxts = new ArrayList<>();
-        lyricsTxts = futils.listAllFileOfDirectory(LYRICS_PATH);
-        System.out.println(lyricsTxts.toString());
+        List<File> lyricsTxts = futils.listAllFileOfDirectory(LYRICS_PATH);
+        //System.out.println(lyricsTxts.toString());
 
         if(lyricsTxts != null) {
+            long docsIndexingTime = 0;
             for (File lyTxt : lyricsTxts) {
                 String filename = lyTxt.getName();
                 String content = futils.readFromTxt(lyTxt.getPath());
+
                 Document doc = new Document();
                 doc.add(new TextField(FILENAME, filename, Field.Store.YES));
                 doc.add(new TextField(CONTENT, content, Field.Store.YES));
 
+                long startIndexing = System.currentTimeMillis();
                 writer.addDocument(doc);
+                docsIndexingTime += (System.currentTimeMillis() - startIndexing);
             }
+            System.out.println("Indexing time: " + docsIndexingTime + "ms");
             writer.commit();
         }
         writer.close();

@@ -30,7 +30,7 @@ public class FileUtility {
     }
 
     public static String readFromTxt(String pathFile) throws Exception{
-        System.out.println(pathFile);
+        //System.out.println(pathFile);
         Path filePath = Path.of(pathFile);
         String content = Files.readString(filePath);
         content = content.replace("\n", " ");
