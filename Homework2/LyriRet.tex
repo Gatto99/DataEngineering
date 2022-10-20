@@ -3,17 +3,19 @@
 \usepackage{multirow}
 \usepackage{multicol}
 \usepackage{hyperref}
-
-\title{IDD: Homework2}
+\usepackage{listings}
+\title{Ingegneria dei dati: Homework 2}
 \author{Davide Gattini}
-\date{October 2022}
+\date{Ottobre 2022}
+
+\lstset{showspaces=false, showstringspaces=false}
 
 \begin{document}
 
 \maketitle
 
 \section{Analyzers}
-Per il campo \textit{filename} si è scelto l'uso di un \textit{StandardAnalyzer} così caratterizzato:
+Per il campo \textbf{\textit{filename}} si è scelto l'uso di un \textit{StandardAnalyzer} così caratterizzato:
 \begin{itemize}
 	\item Tokenizer
 	\begin{itemize}
@@ -25,9 +27,12 @@ Per il campo \textit{filename} si è scelto l'uso di un \textit{StandardAnalyzer
 	\end{itemize}
 \end{itemize}
 
-La scelta deriva dalla volontà di permettere all'utente la ricerca delle canzoni tramite il loro titolo, ignorando che quest'ultimo possa contenere lettere maiuscole e/o una punteggiature, infatti colui che ricerca i titoli delle canzoni si suppone lo faccia senza pensare a questi dettagli \begin{comment}e qualora non si facessero queste considerazioni, i documenti cui titoli hanno punteggiatura o maiuscole, non verranno trovati dal programma a meno che l'utente non sappia dove esse si trovano. \end{comment}
+La scelta deriva dalla volontà di permettere all'utente la ricerca delle canzoni tramite il loro titolo, ignorando che quest'ultimo possa contenere lettere maiuscole e/o una punteggiature, infatti colui che ricerca i titoli delle canzoni si suppone lo faccia senza pensare a questi dettagli. 
+\iffalse
+e qualora non si facessero queste considerazioni, i documenti cui titoli hanno punteggiatura o maiuscole, non verranno trovati dal programma a meno che l'utente non sappia dove esse si trovano. 
+\fi
 
-Anche per il campo \textit{content} viene applicato lo \textit{CustomAnalyzer}:
+Mentre per il campo \textbf{\textit{content}} viene applicato lo \textit{CustomAnalyzer}:
 \begin{itemize}
 	\item Tokenizer
 	\begin{itemize}
@@ -44,7 +49,7 @@ Anche per il campo \textit{content} viene applicato lo \textit{CustomAnalyzer}:
 L'adozione di un analyzer di questo tipo per il lyrics delle canzoni nel corpus, permette di evitare l'indicizzazione di termini molto comuni che saranno ignorati in fase di ricerca poiché si punta ad offrire all'utente il maggior numero possibile di documenti, garantendo efficienza nell'indicizzazione. Inoltre non pensiamo alle maiuscole, né tanto meno ai vari delimitatori e alla punteggiatura per evitare che ne sia richiesta conoscenza a chi esegue la ricerca. Quindi ciò che è stato detto per il titolo, vale anche per il testo. Lo metto nel contenuto e non nella query perché si suppone vengano usate nella query qualora l utente si ricordasse tutto per bene.
 L'ultima considerazione riguarda la presenza di un filtro per il genitivo sassone che viene filtrato poiché è stato considerato come un dettaglio da poter trascurare e quindi non indicizzare.
 
-Infine per la \textit{query}, poiché si è usato il query parser, è stato necessario utilizzare un ulteriore analyzer e la scelta è ricaduta sempre su di un \textit{StandardAnalyzer}.
+Infine per la \textbf{\textit{query}}, poiché si è usato il query parser, è stato necessario utilizzare un ulteriore analyzer e la scelta è ricaduta sempre su di un \textit{StandardAnalyzer}.
 Da sottolineare che non sono state definite delle stop word, così da permettere all'utente di inserire una phrase query contenente questi termini che quindi vengono indicizzate, così considerate qualora si ricordasse il titolo della canzone di cui vuole leggere il testo. Si suppone infatti, che il titolo cercato sia più facile da ricordare, quindi è possibile che vengano inserite potenziali stop word da non ignorare. Mentre per il contenuto, grazie al relativo analyzer, queste, sebbene indicizzate dalla query, non troveranno una corrispondenza nel testo indicizzato di una canzone (se appartenenti all'insieme di stop word definito sopra), soddisfacendo l'obiettivo definito precedentemente, cioè quello di permettere il retrieval di più documenti possibili in questo caso.
 
 \section{File indicizzati e tempo di indicizzazione}
@@ -63,29 +68,48 @@ I file che sono stati indicizzati sono stati recuperati tramite l'uso dell'API \
         $49ms$ & $50ms$ & $47ms$ & $46ms$ & $43ms$ & $44ms$ & $41ms$ & $39ms$ & $42ms$ & $45ms$ \\
     \hline
     \end{tabular}
-    \caption{In questa tabella sono stati riportati i tempi impiegati dal programma per indicizzare i documenti nel corpus. Si ha una media di $\sim{357ms}$.}
+    \caption{In questa tabella sono stati riportati i tempi impiegati dal programma per indicizzare i documenti nel corpus: si ha una media di $\sim{357ms}$.}
 \end{table}
 \end{center}
 \endgroup
 
 \section{Query testate}
-\textit{filename: "A Sky Full Of Stars"}
+Di seguito saranno elencate le query testate, suddivise per il campo su cui sono state effettuate. Prima di farlo, è utile sottolineare che le query, lette da riga di comando, sono processate dal programma tramite il \textit{QueryParser} che permette così di comprendere quando l'utente chiede l'esecuzione di una \textit{PhraseQuery} o, più in generale, di fare il parsing della stringa in input permettendo l'utilizzo di alcuni simboli (e.g. \verb|+| e \verb|-|, vedi ~\ref{filenameFieldQuery})
 
-\textit{filename: "a sky full of stars"}
+\subsection{Campo: \textit{filename}} \label{filenameFieldQuery}
 
-\textit{filename: -sky +full}
+\begin{itemize}
+    \item \textit{\textbf{filename: "A Sky Full Of Stars"}}. Questa PhraseQuery, caratterizzata anche da lettere maiuscole, è stata utilizzata per testare che le maiuscole vengano correttamente ignorate, poiché sia per il filename che per il content, i vari termini sono stati indicizzati con tutte le lettere minuscole.
+    \item \textit{\textbf{filename: "a sky full of stars"}}. In questo caso si è testato, tramite una PhraseQuery con solo minuscole, che il risultato della query precedente fosse uguale alla query in questione.
+    \item \textit{\textbf{filename: -sky +full}}. La TermQuery corrente è caratterizzata da simboli posti come prefisso dei singoli termini e in questo caso la query, grazie al QueryParser, viene riconosciuta per eseguire una ricerca nel corpus dei file cui titolo presenta necessariamente "full", ma che non deve contenere "sky".
+    \item \textit{\textbf{filename: LOVE}}. Si è testata l'indipendenza dalle maiuscole anche quando viene passato un solo termine, quindi per verificare che i documenti trovati siano relativi a file cui nome contiene la stessa parola in qualsiasi formato.
+    \item \textit{\textbf{filename: The Scie}}. Per verificare la correttezza del sistema di ranking e di ricerca, è stato controllato che, passato un termine troncato, vengano comunque trovati i file cui nome include parole "vicine" al termine cercato. Si noti che, non avendo ignorato parole comuni come "The", vengono anche riportati tanti altri documenti, ma grazie al ranking vengono valutati meno del file ricercato, cioè \textit{The Scientist.txt}
+\end{itemize}
 
-\textit{filename: LOVE}
+\iffalse
+\subsubsection{filename: "A Sky Full Of Stars"} \label{PQUpper}
+\subsubsection{filename: "a sky full of stars"}
+\subsubsection{filename: -sky +full} \label{TQSymbols}
+\subsubsection{filename: LOVE}
+\subsubsection{filename: The Scie}
+\fi
 
-\textit{filename: The Scie}
+\subsection{Campo: \textit{content}}
+Successivamente sono stati verificati gli stessi concetti di cui sopra (~\ref{filenameFieldQuery}) anche per il campo \textit{content}. Per cui non verranno ripetute le motivazioni per cui sono state eseguite le seguenti query, piuttosto saranno riportati solamente i risultati relativi.
+\begin{itemize}
+    \item \textbf{\textit{content: "love you"}}.
+    \item \textbf{\textit{content: fix}}.
+    \item \textbf{\textit{content: "Everything you want"}}.
+    \item \textbf{\textit{content: I could not stop}}.
+    \item \textbf{\textit{content: want's dream}}.
+\end{itemize}
 
-\textit{content: "love you"}
+\iffalse
+\subsubsection{content: "love you"}
+\subsubsection{content: fix}
+\subsubsection{content: "Everything you want"}
+\subsubsection{content: want's dream}
+\subsubsection{content: I could not stop}
+\fi
 
-\textit{content: fix}
-
-\textit{content: "Everything you want"}
-
-\textit{content: want's dream}
-
-\textit{content: I could not stop}
 \end{document}
