@@ -29,13 +29,13 @@ public class Searcher {
 
     public static void newsearch() throws Exception{
         String[] splittedInput = {};
-        String field = "";
-        String query = "";
-        QueryParser qp = null;
+        String field;
+        String query;
+        QueryParser qp;
         Query q = null;
-        Path path = null;
-        boolean isValidField = true;
-        boolean isValidQuery = true;
+        Path path;
+        boolean isValidField;
+        boolean isValidQuery;
         boolean quitTyped = false;
 
         Scanner in = new Scanner(System.in);

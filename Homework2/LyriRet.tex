@@ -5,10 +5,11 @@
 \usepackage{hyperref}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{fontawesome}
 
 \usepackage[dvipsnames]{xcolor}
 \title{Ingegneria dei dati: Homework 2}
-\author{Davide Gattini}
+\author{\faGithub\href{https://github.com/Gatto99/DataEngineering}{Davide Gattini}}
 \date{Ottobre 2022}
 
 \definecolor{mGreen}{rgb}{0,0.6,0}
@@ -33,14 +34,14 @@
 \section{Analyzers}
 Per il campo \textbf{\textit{filename}} si è scelto l'uso di un \textit{StandardAnalyzer} così caratterizzato:
 \begin{itemize}
-	\item Tokenizer
-	\begin{itemize}
-		\item StandardTokenizer
-	\end{itemize}
-	\item Token filter
-	\begin{itemize}
-		\item LowerCaseFilter
-	\end{itemize}
+    \item Tokenizer
+    \begin{itemize}
+        \item StandardTokenizer
+    \end{itemize}
+    \item Token filter
+    \begin{itemize}
+        \item LowerCaseFilter
+    \end{itemize}
 \end{itemize}
 
 La scelta deriva dalla volontà di permettere all'utente la ricerca delle canzoni tramite il loro titolo, ignorando che quest'ultimo possa contenere lettere maiuscole e/o una punteggiature, infatti colui che ricerca i titoli delle canzoni si suppone lo faccia senza pensare a questi dettagli. 
@@ -50,16 +51,16 @@ e qualora non si facessero queste considerazioni, i documenti cui titoli hanno p
 
 Mentre per il campo \textbf{\textit{content}} viene applicato un \textit{CustomAnalyzer}:
 \begin{itemize}
-	\item Tokenizer
-	\begin{itemize}
-		\item StandardTokenizer
-	\end{itemize}
-	\item Token filter
-	\begin{itemize}
-		\item LowerCaseFilter
-		\item StopFilter (stop words = \{\textit{of}, \textit{an}, \textit{a}, \textit{the}, \textit{for}\})
+    \item Tokenizer
+    \begin{itemize}
+        \item StandardTokenizer
+    \end{itemize}
+    \item Token filter
+    \begin{itemize}
+        \item LowerCaseFilter
+        \item StopFilter (stop words = \{\textit{of}, \textit{an}, \textit{a}, \textit{the}, \textit{for}\})
         \item EnglishPossessiveFilter
-	\end{itemize}
+    \end{itemize}
 \end{itemize}
 
 L'adozione di un analyzer di questo tipo per il lyrics delle canzoni nel corpus, permette di evitare l'indicizzazione di termini molto comuni che saranno quindi ignorati in fase di ricerca, poiché si punta ad offrire all'utente il maggior numero possibile di documenti, garantendo efficienza nell'indicizzazione. Inoltre, se ne è fatto uso solo per il contenuto poiché quest'ultimo, essendo più articolato del titolo, presenterà molti di questi termini, in questo modo si è evitato che gran parte dei documenti fossero recuperati inutilmente.
@@ -69,10 +70,10 @@ In più sono state ignorate le maiuscole, i vari delimitatori ed anche la punteg
 L'ultima considerazione riguarda la presenza di un filtro per il genitivo sassone, poiché è stato considerato come un dettaglio da poter trascurare e quindi non indicizzare.
 
 Infine per la \textbf{\textit{query}}, poiché si è usato il query parser, è stato necessario utilizzare un ulteriore analyzer e la scelta è ricaduta sempre su di un \textit{StandardAnalyzer}.
-Da sottolineare che non sono state definite delle stop word, così da permettere all'utente di inserire una phrase query contenente questi termini (qualora si ricordasse il titolo della canzone di cui vuole leggere il testo). Si suppone, infatti, che il titolo cercato sia più facile da ricordare rispetto al contenuto. Da notare che, grazie all'analyzer del contenuto, sebbene questi termini siano indicizzati per la query, non troveranno una corrispondenza nel testo indicizzato di una canzone (se appartenenti all'insieme di stop word definito sopra), soddisfacendo l'obiettivo definito precedentemente, cioè quello di permettere il retrieval di più documenti possibili.
+Da sottolineare che non sono state definite delle stop word, così da permettere all'utente di inserire una phrase query contenente questi termini (qualora si ricordasse il titolo della canzone di cui vuole leggere il testo): si suppone che il titolo cercato sia più facile da ricordare rispetto al contenuto. Da notare che, grazie all'analyzer del contenuto, sebbene questi termini siano indicizzati per la query, non troveranno una corrispondenza nel testo indicizzato di una canzone (se appartenenti all'insieme di stop word definito sopra), soddisfacendo l'obiettivo definito precedentemente, cioè quello di permettere il retrieval di più documenti possibili.
 
 \section{File indicizzati e tempo di indicizzazione}
-I file che sono stati indicizzati sono stati recuperati tramite l'uso dell'API \href{https://lyricsgenius.readthedocs.io/en/master/}{\textit{lyricsGenius}}, la quale, tramite uno script python, ha permesso l'estrazione e il salvataggio dei testi delle 100 canzoni più popolari dei Coldplay. Di conseguenza, il nome di ogni file corrisponde al nome della canzone (a cui sono stati eliminati i caratteri speciali) ed il lyrics associato è stato salvato in formato testuale.
+I file che sono stati indicizzati sono stati recuperati tramite l'uso dell'API \href{https://lyricsgenius.readthedocs.io/en/master/}{\textit{lyricsGenius}}, la quale, tramite uno script python, ha permesso l'estrazione e il salvataggio dei testi delle 100 canzoni più popolari dei Coldplay. Di conseguenza, il nome di ogni file corrisponde al nome della canzone (a cui sono stati eliminati i caratteri speciali) e nel programma se ne fa riferimento con il campo \textit{filename}, mentre il lyrics associato è stato salvato in formato testuale e assegnato al campo \textit{content}.
 
 \begin{table}[h]
 \centering
@@ -189,7 +190,7 @@ Si è testata l'indipendenza dalle maiuscole anche quando viene passato un solo 
 \end{lstlisting}
 \end{tabular}    
 \end{center}
-Per verificare la correttezza del sistema di ranking e di ricerca, è stato controllato che, passato un termine troncato, vengano comunque trovati i file cui nome include parole "vicine" al termine cercato. Si noti che per la query, avendo indicizzato parole comuni come "The", vengono anche riportati tanti altri documenti, ma grazie al ranking vengono valutati meno del file ricercato, cioè \textit{The Scientist.txt}
+Per verificare la correttezza del sistema di ranking e di ricerca, è stato controllato che, passato un termine troncato, vengano comunque trovati i file cui nome include parole "vicine" al termine cercato. Si noti che, avendo indicizzato parole comuni come "The", vengono anche riportati tanti altri documenti, ma grazie al ranking vengono valutati meno del file ricercato, cioè \textit{The Scientist.txt}
 
 \begin{table}[h!]
 \centering
@@ -378,4 +379,6 @@ Successivamente sono stati verificati gli stessi concetti di cui sopra (~\ref{fi
     \hline
 \end{tabular}
 \end{table}
+\section{Github}
+Link del progetto github: \url{https://github.com/Gatto99/DataEngineering}
 \end{document}
