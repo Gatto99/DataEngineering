@@ -4,11 +4,28 @@
 \usepackage{multicol}
 \usepackage{hyperref}
 \usepackage{listings}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
 \title{Ingegneria dei dati: Homework 2}
 \author{Davide Gattini}
 \date{Ottobre 2022}
 
-\lstset{showspaces=false, showstringspaces=false}
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{prompt}{
+    stringstyle=\color{OliveGreen},
+    basicstyle=\itshape\ttfamily,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=c,                    
+    keepspaces=true,                 
+    showspaces=false,                
+    showstringspaces=false,
+    moredelim=**[is][\color{OliveGreen}]{@}{@},
+}
 
 \begin{document}
 
@@ -74,42 +91,159 @@ I file che sono stati indicizzati sono stati recuperati tramite l'uso dell'API \
 \endgroup
 
 \section{Query testate}
-Di seguito saranno elencate le query testate, suddivise per il campo su cui sono state effettuate. Prima di farlo, è utile sottolineare che le query, lette da riga di comando, sono processate dal programma tramite il \textit{QueryParser} che permette così di comprendere quando l'utente chiede l'esecuzione di una \textit{PhraseQuery} o, più in generale, di fare il parsing della stringa in input permettendo l'utilizzo di alcuni simboli (e.g. \verb|+| e \verb|-|, vedi ~\ref{filenameFieldQuery})
+Di seguito saranno elencate le query testate, suddivise per il campo su cui sono state effettuate. Prima di farlo, è utile sottolineare che le query, lette da riga di comando, sono processate dal programma tramite il \textit{QueryParser} che permette così di comprendere quando l'utente chiede l'esecuzione di una \textit{PhraseQuery} o, più in generale, di fare il parsing della stringa in input permettendo l'utilizzo di alcuni simboli (e.g. \verb|+| e \verb|-|, vedi ~\ref{filenameFieldQuery}).
+Si noti che qualora la query corrisponda ad una stringa vuota, verrà processata senza riportare documenti (questo comportamente è permesso dall'uso della funzione \textit{MatchNoDocsQuery()}).
 
 \subsection{Campo: \textit{filename}} \label{filenameFieldQuery}
 
-\begin{itemize}
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[style=prompt]
+    @filename: "A Sky Full Of Stars"@
+\end{lstlisting}
+\end{tabular}    
+\end{center}
+Questa PhraseQuery, caratterizzata anche da lettere maiuscole, è stata utilizzata per testare che le maiuscole vengano correttamente ignorate, poiché sia per il filename che per il content, i vari termini sono stati indicizzati con tutte le lettere minuscole.
+
+doc38:A Sky Full of Stars
+
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[style=prompt]
+    @filename: "a sky full of stars"@
+\end{lstlisting}
+\end{tabular}    
+\end{center}
+In questo caso si è testato, tramite una PhraseQuery con solo minuscole, che il risultato della query precedente fosse uguale alla query in questione.
+
+doc38:A Sky Full of Stars
+
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[style=prompt]
+    @filename: -sky +full@
+\end{lstlisting}
+\end{tabular}    
+\end{center}
+La TermQuery corrente è caratterizzata da simboli posti come prefisso dei singoli termini e in questo caso la query, grazie al QueryParser, viene riconosciuta per eseguire una ricerca nel corpus dei file cui titolo presenta necessariamente "full", ma che non deve contenere "sky".
+
+doc4:A Head Full of Dreams
+
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[style=prompt]
+    @filename: LOVE@
+\end{lstlisting}
+\end{tabular}    
+\end{center}
+Si è testata l'indipendenza dalle maiuscole anche quando viene passato un solo termine, quindi per verificare che i documenti trovati siano relativi a file cui nome contiene la stessa parola in qualsiasi formato.
+
+doc26:True Love
+doc37:Lovers in Japan   Reign of Love
+
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[style=prompt]
+    @filename: The Scie@
+\end{lstlisting}
+\end{tabular}    
+\end{center}
+Per verificare la correttezza del sistema di ranking e di ricerca, è stato controllato che, passato un termine troncato, vengano comunque trovati i file cui nome include parole "vicine" al termine cercato. Si noti che, non avendo ignorato parole comuni come "The", vengono anche riportati tanti altri documenti, ma grazie al ranking vengono valutati meno del file ricercato, cioè \textit{The Scientist.txt}
+
+doc44:The Scientist (1.0745345)
+doc30:The Hardest Part (0.9128916)
+doc23:Hymn for the Weekend (0.7935219)
+doc52:People of the Pride (0.7935219)
+doc70:Champion of the World (0.7935219)
+doc72:X Marks the Spot (0.7935219)
+doc86:Us Against the World (0.7935219)
+doc87:Swallowed in the Sea (0.7935219)
+doc83:Hymn for the Weekend  Seeb Remix  (0.6290202)
+doc61:Hymn for the Weekend  Alan Walker Remix  (0.569944)
+
+\iffalse
+    \begin{itemize}
     \item \textit{\textbf{filename: "A Sky Full Of Stars"}}. Questa PhraseQuery, caratterizzata anche da lettere maiuscole, è stata utilizzata per testare che le maiuscole vengano correttamente ignorate, poiché sia per il filename che per il content, i vari termini sono stati indicizzati con tutte le lettere minuscole.
     \item \textit{\textbf{filename: "a sky full of stars"}}. In questo caso si è testato, tramite una PhraseQuery con solo minuscole, che il risultato della query precedente fosse uguale alla query in questione.
     \item \textit{\textbf{filename: -sky +full}}. La TermQuery corrente è caratterizzata da simboli posti come prefisso dei singoli termini e in questo caso la query, grazie al QueryParser, viene riconosciuta per eseguire una ricerca nel corpus dei file cui titolo presenta necessariamente "full", ma che non deve contenere "sky".
     \item \textit{\textbf{filename: LOVE}}. Si è testata l'indipendenza dalle maiuscole anche quando viene passato un solo termine, quindi per verificare che i documenti trovati siano relativi a file cui nome contiene la stessa parola in qualsiasi formato.
     \item \textit{\textbf{filename: The Scie}}. Per verificare la correttezza del sistema di ranking e di ricerca, è stato controllato che, passato un termine troncato, vengano comunque trovati i file cui nome include parole "vicine" al termine cercato. Si noti che, non avendo ignorato parole comuni come "The", vengono anche riportati tanti altri documenti, ma grazie al ranking vengono valutati meno del file ricercato, cioè \textit{The Scientist.txt}
 \end{itemize}
-
-\iffalse
-\subsubsection{filename: "A Sky Full Of Stars"} \label{PQUpper}
-\subsubsection{filename: "a sky full of stars"}
-\subsubsection{filename: -sky +full} \label{TQSymbols}
-\subsubsection{filename: LOVE}
-\subsubsection{filename: The Scie}
 \fi
 
 \subsection{Campo: \textit{content}}
 Successivamente sono stati verificati gli stessi concetti di cui sopra (~\ref{filenameFieldQuery}) anche per il campo \textit{content}. Per cui non verranno ripetute le motivazioni per cui sono state eseguite le seguenti query, piuttosto saranno riportati solamente i risultati relativi.
-\begin{itemize}
-    \item \textbf{\textit{content: "love you"}}.
-    \item \textbf{\textit{content: fix}}.
-    \item \textbf{\textit{content: "Everything you want"}}.
-    \item \textbf{\textit{content: I could not stop}}.
-    \item \textbf{\textit{content: want's dream}}.
-\end{itemize}
 
-\iffalse
-\subsubsection{content: "love you"}
-\subsubsection{content: fix}
-\subsubsection{content: "Everything you want"}
-\subsubsection{content: want's dream}
-\subsubsection{content: I could not stop}
-\fi
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[style=prompt]
+    @content: "love you"@
+\end{lstlisting}
+\end{tabular}    
+\end{center}
+
+doc3:Ink (0.9303554)
+doc82:Yellow (0.787055)
+doc16:Flags (0.6891087)
+doc9:X Y (0.618477)
+doc37:Lovers in Japan   Reign of Love (0.5962774)
+doc65:A Message (0.5756162)
+doc68:Biutyful (0.49061614)
+
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[style=prompt]
+    @content: fix@
+\end{lstlisting}
+\end{tabular}    
+\end{center}
+
+doc39:Fix You (2.636421)
+doc9:X Y (2.2264667)
+doc8:Politik (1.6666911)
+
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[style=prompt]
+    @content: "Everything you want"@
+\end{lstlisting}
+\end{tabular}    
+\end{center}
+
+doc28:Adventure of a Lifetime (2.5110426)
+doc68:Biutyful (2.1120477)
+
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[style=prompt]
+    @content: I could not stop@
+\end{lstlisting}
+\end{tabular}    
+\end{center}
+
+doc18:Gravity (2.7940829)
+doc25:Clocks (2.7253244)
+doc87:Swallowed in the Sea (2.6062596)
+doc30:The Hardest Part (2.3099952)
+doc12:Speed of Sound (2.1411023)
+doc49:Everythings Not Lost (2.047451)
+doc39:Fix You (1.5887142)
+doc62:Arabesque (1.5794398)
+doc16:Flags (1.5728197)
+doc52:People of the Pride (1.5381694)
+
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[style=prompt]
+    @content: want's dream@
+\end{lstlisting}
+\end{tabular}    
+\end{center}
+
+doc28:Adventure of a Lifetime (2.1245675)
+doc11:Paradise (1.5426661)
+doc66:Eko (1.5272726)
+doc70:Champion of the World (1.2550737)
+doc16:Flags (1.1110598)
 
 \end{document}
