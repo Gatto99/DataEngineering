@@ -1,0 +1,226 @@
+CALCIATORI DELL'INTER
+
+Siti:
+1. https://www.transfermarkt.it/inter-mailand/startseite/verein/46/saison_id/2022
+2. https://www.inter.it/it/teams/prima-squadra?role=tutti
+3. https://sport.virgilio.it/calcio/giocatori/
+4. https://www.tuttocalciatori.net/rosa/f.c.-internazionale
+5. https://www.footballdatabase.eu/en/club/team/16-inter_milan/2022-2023
+
+Attributi rilevanti [2022-2023]:
+	a. Nome e Cognome
+	b. Data di nascita
+	c. Posizione
+	d. Piede
+	e. Presenze
+	f. Gol
+	g. Assist
+	h. Ammonizioni
+	i. Espulsioni
+	f. Valore di mercato
+
+-------------------------------TRANFERMARKET-------------------------------
+[XPATH]
+a. Nome e Cognome = $x("//header[contains(@itemtype,'https://schema.org/Person')]/div/h1/strong/text()") solo Cognome
+b. Data di nascita = $x("(//span[text()='Data di nascita:']/following-sibling::span)[1]/a/text()")
+c. Posizione = $x("(//span[text()='Posizione:']/following-sibling::span)[1]/text()")
+d. Piede = $x("(//span[text()='Piede:']/following-sibling::span)[1]/text()")
+e. Presenze = $x("//span[text()='Partite']/parent::div/following-sibling::a/text()")
+f. Gol = $x("//span[text()='Reti']/parent::div/following-sibling::a/text()")
+g. Assist = $x("//span[text()='Assist']/parent::div/following-sibling::a/text()")
+h. Ammonizioni = $x("//span[text()='Ammonizioni']/parent::div/following-sibling::a/text()")
+i. Espulsioni = $x("//span[text()='Espulsioni']/parent::div/following-sibling::a/text()")
+l. Valore di mercato = $x("//div[text()='Valore attuale:']/following-sibling::div/a/text()")
+
+1.) [TRANSFERMARKET]
+Pagine:
+	1.1 https://www.transfermarkt.it/alessandro-bastoni/profil/spieler/315853
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.2 https://www.transfermarkt.it/lautaro-martinez/profil/spieler/406625
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.3 https://www.transfermarkt.it/edin-dzeko/profil/spieler/28396
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.4 https://www.transfermarkt.it/henrikh-mkhitaryan/profil/spieler/55735
+		a. Ok 
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.5 https://www.transfermarkt.it/nicolo-barella/profil/spieler/255942
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------------INTER SITE-------------------------------
+[XPATH]
+a. Nome e Cognome = $x("//div[contains(@class,'css-1riajt')]/div[contains(@class,'css-79elbk')]/h1[contains(@class,'css-oq49di')]/span/text()")
+b. Eta = $x("//p[text()='Età']/preceding-sibling::p/text()")
+c. Altezza = $x("(//p[text()='Altezza']/preceding-sibling::p/text())[1]")
+d. Presenze = $x("//p[text()='Partite giocate']/following-sibling::p/span/text()")
+e. Gol = $x("//p[text()='Gol segnati']/following-sibling::p/span/text()")
+f. Ammonizioni = $x("//p[text()='Cartellini gialli']/following-sibling::p/span/text()")
+g. Espulsioni = $x("//p[text()='Cartellini rossi']/following-sibling::p/span/text()")
+h. Contrasti vinti = $x("//p[text()='Contrasti vinti']/following-sibling::p/span/text()")
+i. Disimpegni = $x("//p[text()='Disimpegni']/following-sibling::p/span/text()")
+
+1.) [INTER SITE]
+Pagine:
+	1.1 https://www.inter.it/it/squadra/prima-squadra/stefan-de-vrij
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.2 https://www.inter.it/it/squadra/prima-squadra/raoul-bellanova
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.3 https://www.inter.it/it/squadra/prima-squadra/francesco-acerbi
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.4 https://www.inter.it/it/squadra/prima-squadra/dimarco
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.5 https://www.inter.it/it/squadra/prima-squadra/milan-skriniar
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-----------------------------SPORT VIRGILIO-----------------------------
+[XPATH]
+a. Nome e Cognome = 
+b. Eta = 
+c. Altezza = 
+d. Presenze = 
+e. Gol = 
+f. Ammonizioni = 
+g. Espulsioni = 
+h. Contrasti vinti = 
+i. Disimpegni = 
+TODO:
+
+1.) [SPORT VIRGILIO]
+Pagine:
+	1.1 
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.2 
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.3 
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.4 
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.5 
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+------------------------------------------------------------------------
+------------------------------------------------------------------------
