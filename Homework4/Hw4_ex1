@@ -305,4 +305,15 @@ Prova 10 [https://www.amazon.it/Kallrra-Mensola-Angolare-Acciaio-Portasapone/dp/
 6. Ok
 7. [] non c'è
 
+Alla fine ho modificato tutte le espressioni, inserendo non l'uguaglianza, bensì il contains.
+
+XPath expressions:
+1. Nome prodotto = $x("//span[@id='productTitle']/text()")
+2. Prezzo prodotto = $x("(//div[@id='apex_desktop']/descendant::div[@id='corePriceDisplay_desktop_feature_div']/descendant::span[contains(@class, 'a-offscreen')]/text())[1]")
+3. Materiale = $x("//span[contains(text(),'Materiale')]/ancestor::td/following-sibling::td/span/text()")
+4. Colore = $x("//span[contains(text(),'Colore')]/ancestor::td/following-sibling::td/span/text()")
+5. Marchio = $x("//span[contains(text(),'Marchio')]/ancestor::td/following-sibling::td/span/text()")
+6. Numero di scomparti = $x("//span[contains(text(),'Numero di scomparti')]/ancestor::td/following-sibling::td/span/text()")
+7. Forma = $x("//span[contains(text(),'Forma')]/ancestor::td/following-sibling::td/span/text()")
+
 
