@@ -180,13 +180,17 @@ Pagine:
 [XPATH]
 a. Nome e Cognome = $x("//div[contains(@class,'css-1riajt')]/div[contains(@class,'css-79elbk')]/h1[contains(@class,'css-oq49di')]/span/text()")
 b. Eta = $x("//p[text()='Età']/preceding-sibling::p/text()")
-c. Altezza = $x("(//p[text()='Altezza']/preceding-sibling::p/text())[1]")
-d. Presenze = $x("//p[text()='Partite giocate']/following-sibling::p/span/text()")
+. Posizione
+. Piede
+c. Presenze = $x("//p[text()='Partite giocate']/following-sibling::p/span/text()")
 e. Gol = $x("//p[text()='Gol segnati']/following-sibling::p/span/text()")
+. Assist =
 f. Ammonizioni = $x("//p[text()='Cartellini gialli']/following-sibling::p/span/text()")
 g. Espulsioni = $x("//p[text()='Cartellini rossi']/following-sibling::p/span/text()")
+d. Altezza = $x("(//p[text()='Altezza']/preceding-sibling::p/text())[1]")
 h. Contrasti vinti = $x("//p[text()='Contrasti vinti']/following-sibling::p/span/text()")
 i. Disimpegni = $x("//p[text()='Disimpegni']/following-sibling::p/span/text()")
+j. Ruolo = $x("//span[contains(@class,'css-jpejlw')]/text()")
 
 1.) [INTER SITE]
 Pagine:
@@ -276,94 +280,126 @@ Pagine:
 [XPATH]
 a. Nome e Cognome = $x("//h1[contains(@class, 'title-page')]/text()")
 b. Età = $x("//b[text()='Età:']/following-sibling::text()")
+. Posizione = $x("//*[contains(text(), 'Ruolo')]/following-sibling::text()")
+e. Piede = $x("//b[text()='Piede preferito:']/following-sibling::text()")
+. Presenze = $x("//ul[@id='stats-leagues']//*[contains(text(),'Partite disputate')]/preceding-sibling::*/text()")
+i. Gol = $x("(//span[text()='Gol fatti']/preceding-sibling::span/text())[1]")
+l. Assist = $x("(//span[text()='Assist']/preceding-sibling::span/text())[1]")
+. Ammonizioni = $x("//ul[@id='stats-leagues']//*[contains(text(),'Cartellini gialli')]/preceding-sibling::*/text()")
+. Espulsioni = $x("//ul[@id='stats-leagues']//*[contains(text(),'Cartellini rossi')]/preceding-sibling::*/text()")
 c. Nazionale = $x("//b[text()='Nazionale:']/following-sibling::text()")
 d. Nazionalità = $x("//b[text()='Nazionalità:']/following-sibling::text()")
-e. Piede = $x("//b[text()='Piede preferito:']/following-sibling::text()")
 f. Peso = $x("//b[text()='Peso:']/following-sibling::text()")
 g. Numero maglia = $x("(//span[text()='Numero di maglia']/preceding-sibling::span/text())[1]")
 h. Minuti giocati = $x("(//span[text()='Minuti giocati']/preceding-sibling::span/text())[1]")
-i. Gol = $x("(//span[text()='Gol fatti']/preceding-sibling::span/text())[1]")
-l. Assist = $x("(//span[text()='Assist']/preceding-sibling::span/text())[1]")
+
 
 1.) [SPORT VIRGILIO]
 Pagine:
 	1.1 [https://sport.virgilio.it/calcio/giocatori/robin_gosens/]
 		a. Ok
 		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		l. Ok
+		. Ok
+		. Ok
 		c. Ok
 		d. Ok
-		e. Ok
 		f. Ok
 		g. Ok
 		h. Ok
-		i. Ok
-		l. Ok
 	1.2 [https://sport.virgilio.it/calcio/giocatori/marcelo_brozovic/]
 		a. Ok
 		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		. Ok
+		. Ok
+		l. Ok
 		c. Ok
 		d. Ok
-		e. Ok
 		f. Ok
 		g. Ok
 		h. Ok
-		i. Ok
-		l. Ok
 	1.3 [https://sport.virgilio.it/calcio/giocatori/matteo_darmian/]
 		a. Ok
 		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		. Ok
+		. Ok
+		l. Ok
 		c. - Non è definita la nazionalità
 		d. Ok
-		e. Ok
 		f. Ok
 		g. Ok
 		h. Ok
-		i. Ok
-		l. Ok
 	1.4 [https://sport.virgilio.it/calcio/giocatori/joaquin_correa/]
 		a. Ok
 		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		. Ok
+		. Ok
+		l. Ok
 		c. - Non è definita la nazionalità
 		d. Ok
-		e. Ok
 		f. Ok
 		g. Ok
 		h. Ok
-		i. Ok
-		l. Ok
 	1.5 [https://sport.virgilio.it/calcio/giocatori/romelu_lukaku/]
 		a. Ok
 		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		. Ok
+		. Ok
+		l. Ok
 		c. Ok
 		d. Ok
-		e. Ok
 		f. Ok
 		g. Ok
 		h. Ok
-		i. Ok
-		l. Ok
 	1.6 [https://sport.virgilio.it/calcio/giocatori/samir_handanovic/]
 		a. Ok
 		b. Ok
+		. Ok
+		e. Ok
+		i. [] non se ne tiene conto (è un portiere)
+		. Ok
+		. Ok
+		l. Ok
 		c. - non definita nel sito
 		d. Ok
-		e. Ok
 		f. Ok
 		g. Ok
 		h. Ok
-		i. [] non se ne tiene conto (è un portiere)
-		l. Ok
 	1.7 [https://sport.virgilio.it/calcio/giocatori/johan_vasquez/] per verificare che funzioni anche con giocatori di altre squadre
 		a. Ok
 		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		. Ok
+		. Ok
+		l. Ok
 		c. - Non è definita la nazionalità
 		d. Ok
-		e. Ok
 		f. Ok
 		g. Ok
 		h. Ok
-		i. Ok
-		l. Ok
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 -----------------------------TUTTOCALCIATORI----------------------------
@@ -471,12 +507,15 @@ a. Nome e Cognome = $x("//h1/text()")
 b. Età = $x("//td[text()='Età']/following-sibling::td/text()")
 c. Ruolo = $x("(//strong[text()='RUOLO']/following-sibling::text())[1]")
 d. Piede = $x("(//strong[text()='PIEDE CALCIO']/following-sibling::text())[1]")
+. Presenze = $x("//*[contains(@class,'tr_campionato')]/*[contains(text(),'2022-2023')]/following-sibling::td[3]//text()")
 e. Scadenza contratto = $x("(//strong[text()='SCADENZA CONTRATTO']/following-sibling::text())[1]")
 f. Procuratore = $x("(//strong[text()='PROCURATORE']/following-sibling::text())[1]")
 g. Esordio in nazionale = $x("(//strong[text()='ESORDIO IN NAZIONALE']/following-sibling::text())[1]")
 h. Presenze in nazionale = $x("(//strong[text()='PRESENZE IN NAZIONALE']/following-sibling::text())[1]")
 i. Presenze nei campionati = $x("//tr[contains(@class,'tr_campionato totale')]/td[4]/text()")
 l. Gol 2022-2023 in Serie A=  $x("(//tr[contains(@class,'tr_campionato')]/td[text()='2022-2023']/following-sibling::td[4]/strong/text())[1]")
+. Ammonizioni = $x("(//*[contains(@class,'tr_campionato')]/*[contains(text(),'2022-2023')]/following-sibling::td[7])[1]//text()")
+. Espulsioni = $x("(//*[contains(@class,'tr_campionato')]/*[contains(text(),'2022-2023')]/following-sibling::td[8])[1]//text()")
 
 1.) [TUTTOCALCIATORI]
 Pagine:
@@ -624,22 +663,13 @@ Pagine:
 		g. 
 		h. 
 		i. 
-	1.6 per verificare che funzioni anche con giocatori di altre squadre
-		a. 
-		b. 
-		c. 
-		d. 
-		e. 
-		f. 
-		g. 
-		h. 
-		i. 
 ---------------------------RISOLTO GOAL XPATH--------------------------
 c. Goals = $x("//span[text()='Goals']/preceding-sibling::span[1]/text()")
 -----------------------------------------------------------------------
 [XPATH]
 a. Nome e Cognome = $x("//h1/span[contains(@class,'lastname')]/..//text()")
 [ritorna una lista, cui primo elemento è il nome e il secondo è il cognome RIFALLO PER NOME E COGNOME PRIMO SITO]
+. Età = $x("//*[@class='age']/text()")
 b. Squadra = $x("//div[contains(@class,'clublogo')]/a/text()")
 c. Goals = $x("//span[text()='Goals']/preceding-sibling::span[1]/text()")
 d. Minuti giocati = $x("//span[text()='Minutes played']/preceding-sibling::span[1]/text()")
@@ -649,6 +679,8 @@ f. Peso = $x("//span[contains(text(),'Weight')]/following-sibling::text()")
 g. Piede = $x("//span[contains(text(),'Best foot')]/following-sibling::text()")
 h. Posizione = $x("//tr[contains(@class,'mainposition') or contains(@class,'otherposition')]/td[1]/text()")
 [ELENCO TUTTE LE POSIZIONI]
+. Presenze = $x("//*[contains(text(),'Played matches')]/preceding-sibling::*/text()")
+e. Cartellini rossi = $x("//span[text()='Red cards']/preceding-sibling::span[1]/text()")
 
 
 1.) [FOOTBALLDB]

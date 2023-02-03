@@ -96,7 +96,7 @@ Prova 3 [https://www.amazon.it/Portaoggetti-Plastica-Polipropilene-Multifunziona
 3. Ok
 4. Ok
 5. Ok
-6. [] però ci sta il numero di articoli che potrebbe essere considerato corrispondente al numero di scompartimenti
+6. [] però ci sta il numero di articoli che potrebbe essere considerato corrispondente al numero di scompartimenti NO
 7. [] non sembra avere una forma descritta
 
 --------------------------------------------------------RISOLTO PREZZO su prime 3--------------------------------------------------------
@@ -166,42 +166,6 @@ Prova 6 [https://www.amazon.it/Doccia-Mensole-Portaoggetti-BagnoOrganizzatore-Au
 6. Ok
 7. [] ==> ERRORE
 
-Prova 7 [https://www.amazon.it/Angoliera-telescopica-inossidabile-Scaffale-plastica/dp/B01D030J3Q/ref=zg_bs_731832031_sccl_28/259-1215578-3223537?psc=1]
-1. Ok
-2. Ok
-3. [] non ha descrizione nel formato tabellare ma è tutto scritto come una lista CONTROLLA
-4. [] come sopra
-5. [] come sopra
-6. [] come sopra
-7. [] come sopra
-
-Prova 8 [https://www.amazon.it/MSV-140308-Scaffaletto-34-66/dp/B00IK33VWS/ref=zg_bs_731832031_sccl_36/259-1215578-3223537?psc=1]
-1. Ok
-2. Ok
-3. [] non ha descrizione nel formato tabellare ma è tutto scritto come una lista CONTROLLA
-4. [] come sopra
-5. [] come sopra
-6. [] come sopra
-7. [] come sopra
-
-Prova 9 [https://www.amazon.it/Multiply-X-portaoggetti-Anti-ruggine-anodizzato-detergente/dp/B06XHTMPR1/ref=zg_bs_731832031_sccl_44/259-1215578-3223537?psc=1]
-1. Ok
-2. Ok
-3. Ok
-4. Ok
-5. Ok
-6. Ok
-7. [] non c'è
-
-Prova 10 [https://www.amazon.it/Kallrra-Mensola-Angolare-Acciaio-Portasapone/dp/B09FP98NWM/ref=zg_bs_731832031_sccl_50/259-1215578-3223537?th=1]
-1. Ok
-2. Ok
-3. Ok
-4. Ok
-5. Ok
-6. Ok
-7. [] non c'è
-
 --------------------------------------------------------RISOLTO FORMA--------------------------------------------------------
 7. Forma = $x("//span[contains(text(),'Forma')]/ancestor::td/following-sibling::td/span/text()")
 --------------------------------------------------------RISOLTO FORMA--------------------------------------------------------
@@ -269,23 +233,23 @@ Prova 6 [https://www.amazon.it/Doccia-Mensole-Portaoggetti-BagnoOrganizzatore-Au
 6. Ok
 7. Ok
 
-Prova 7 [https://www.amazon.it/Angoliera-telescopica-inossidabile-Scaffale-plastica/dp/B01D030J3Q/ref=zg_bs_731832031_sccl_28/259-1215578-3223537?psc=1]
+Prova 7 [https://www.amazon.it/ZUNTO-Mensola-Doccia-Autoadesivo-Mensole-Bagno-Organizzatore/dp/B07YDD1HX5/ref=zg_bs_731832031_sccl_2/259-1215578-3223537?psc=1]
 1. Ok
 2. Ok
-3. [] non ha descrizione nel formato tabellare ma è tutto scritto come una lista CONTROLLA
-4. [] come sopra
-5. [] come sopra
-6. [] come sopra
-7. [] come sopra
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. Ok
 
-Prova 8 [https://www.amazon.it/MSV-140308-Scaffaletto-34-66/dp/B00IK33VWS/ref=zg_bs_731832031_sccl_36/259-1215578-3223537?psc=1]
+Prova 8 [https://www.amazon.it/SHBaizoy-perforazione-Ajustable-telescopico-Portasapone/dp/B0B6C98DB8/ref=zg_bs_731832031_sccl_3/259-1215578-3223537?psc=1]
 1. Ok
 2. Ok
-3. [] non ha descrizione nel formato tabellare ma è tutto scritto come una lista CONTROLLA
-4. [] come sopra
-5. [] come sopra
-6. [] come sopra
-7. [] come sopra
+3. Ok
+4. [] non c'è
+5. Ok
+6. Ok
+7. [] non c'è
 
 Prova 9 [https://www.amazon.it/Multiply-X-portaoggetti-Anti-ruggine-anodizzato-detergente/dp/B06XHTMPR1/ref=zg_bs_731832031_sccl_44/259-1215578-3223537?psc=1]
 1. Ok
@@ -316,4 +280,12 @@ XPath expressions:
 6. Numero di scomparti = $x("//span[contains(text(),'Numero di scomparti')]/ancestor::td/following-sibling::td/span/text()")
 7. Forma = $x("//span[contains(text(),'Forma')]/ancestor::td/following-sibling::td/span/text()")
 
+Modificato Prezzo e altre espressioni
 
+1. Nome prodotto = $x("//span[@id='productTitle']/text()")
+2. Prezzo prodotto = $x("(//div[@id='corePriceDisplay_desktop_feature_div']//span[contains(@class,'a-offscreen')])[1]/text()")
+3. Materiale = $x("//tr[contains(@class,'po-material')]/td[contains(@class,'a-span9')]/span/text()")
+4. Colore = $x("//tr[contains(@class,'po-color')]/td[contains(@class,'a-span9')]/span/text()")
+5. Marchio = $x("//tr[contains(@class,'po-brand')]/td[contains(@class,'a-span9')]/span/text()")
+6. Numero di scomparti = $x("//tr[contains(@class,'po-number_of_compartments')]/td[contains(@class,'a-span9')]/span/text()")
+7. Forma = $x("//tr[contains(@class,'po-item_shape')]/td[contains(@class,'a-span9')]/span/text()")
