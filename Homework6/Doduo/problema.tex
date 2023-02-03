@@ -1,0 +1,22 @@
+Inferire metadati relativi alle tabelle (poiché informazioni spesso assenti), è un obiettivo utile specialmente nell'ambito della gestione dei dati. In particolare, il problema in questione è relativo alla ricerca dei tipi e delle relazioni semantiche tra le colonne presenti in una tabella, in quanto procurano maggiori informazioni rispetto al riconoscere solo il tipo dei dati di una colonna come stringhe o interi; le relazioni tra colonne possono suggerire interessanti connessioni tra i dati in tabella, permettendo di delineare il contesto in cui essa è situata, così da rendere più facile la comprensione dei dati presenti in tabella. 
+
+Si vuole dunque evitare che questi metadati siano scritti a mano a favore di un processo automatizzato, la cui alternativa manuale rappresenta una soluzione troppo onerosa.
+
+Si parla di due task che, inoltre, non risultano essere tra loro indipendenti: sapere se una colonna è relativa all'entità "persona", può essere d'aiuto per capire che un'altra colonna, nella stessa tabella, associata all'entità "paese" (o "città") sia in relazione "luogo di nascita" con essa. Quindi il contenuto delle colonne aiuta a definire il loro tipo, mentre i dati in colonne diverse, possono aiutare a definirne le relazioni. Oltre a trovare questi metadati, se ne deve assicurare la correttezza, nell'esempio precedente è infatti necessario dimostrare che la relazione è veramente il "luogo di nascita" e non il "luogo di morte".
+
+Riassumendo, due sono i task che devono essere risolti: 
+\begin{enumerate}
+    \item predizione del tipo semantico delle colonne
+    \item predizione delle relazioni semantiche tra colonne
+\end{enumerate}
+
+Esistono modelli che eseguono il primo task e che, sfruttando i recenti avanzamenti nel machine learning, lo definiscono come una classificazione multi-classe; lo stesso vale per il secondo task.
+
+Tra i modelli che vengono utilizzati, ve ne sono alcuni detti "modelli a colonna singola", che prevedono una serializzazione di una colonna $C$ cui valori sono $v_{1},...,v_{m}$ in: 
+\[\text{[CLS]} v_{1},...,v_{m} \text{[SEP]}\]
+dove [CLS] e [SEP] sono token speciali usati per marcare l'inizio e la fine della sequenza. Questa serializzazione viene usata da questi modelli per la predizione del tipo di una colonna tramite un task di classificazione delle sequenze così descritte, in maniera analoga si esegue il task di predizione delle relazioni tra una coppia di colonne $C$ e $C'$, così serializzate:
+
+\[\text{[CLS]}v_{1},...,v_{m} \text{[SEP]} v'_{1},...,v'_{m} \text{[SEP]}\]
+
+Questo approccio, però, definisce i tipi delle colonne ignorando se queste appartengono alla stessa tabella, quindi fallisce nel catturare il suo contesto.
+Infine, un ulteriore problema ricade sulle dimensioni e qualità del training set, in particolare spesso sono richiesti tanti dati per avere dei buoni risultati.

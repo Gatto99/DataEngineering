@@ -1,0 +1,28 @@
+Per poter valutare il sistema, sono stati eseguiti esperimenti su due dataset: 
+
+\begin{itemize}
+    \item WikiTable
+    \item VizNet
+\end{itemize}
+
+Sono stati presi in considerazione anche modelli alternativi, che rappresentano la baseline con cui il progetto Doduo è stato confrontato empiricamente:
+
+\begin{itemize}
+    \item Sherlock
+    \item Sato
+    \item TURL
+\end{itemize}
+
+Per quest ultimo sono state valutate le performance sul dataset WikiTable, sia con che senza i metadati.
+
+Successivamente, per verificare l'efficacia dell'apprendimento multi-task e dell'architettura multi-colonna, è stata testata una variante di Doduo: Dosolo, la variante senza apprendimento multi-task.
+
+Il confronto è stato poi allargato anche allo stesso modello, ma a singola colonna (che utilizza solo i valori della colonna target), anch'esso addestrato senza apprendimento multi-task, in questo caso è stato applicato sul dataset VizNet e confrontato con Doduo.
+
+Poiché i LM pre-addestrati sono sensibili all'ordinamento delle sequenze, per verificare che Doduo non ne fosse influenzato, è stato addestrato e valutato su due versioni del dataset WikiTable, in cui le righe e le colonne sono state randomicamente mischiate;
+
+Per verificare l'efficienza nell'apprendimento, i modelli Doduo sono stati addestrati con dei training set di differenti dimensioni (10\%, 25\%, 50\% e 100\%);
+
+Per verificare l'efficacia del sistema rispetto ai dati in input, sono state valutate le varianti di Doduo con sequenze di token più corte.
+
+In conclusione, Doduo è stato anche applicato ad uno scenario di clusterizzazione di colonne rilevanti, il tutto utilizzando un database enterprise in produzione (nel dominio HR). Quindi è stato simulato un workflow di un data scientist, caratterizzato da un'analisi relativa alla ricerca di lavoro e alle recensioni di compagnie. E' stato poi confrontato con tre baseline e due approcci di schema matching tradizionali, utilizzando metriche come Precisione, Recall ed F1. 

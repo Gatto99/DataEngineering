@@ -1,0 +1,14 @@
+Per valutare Magellano, l'impostazione empirica ha previsto un esperimento su larga scala con dati del mondo reale, con studenti a cui è stato chiesto di applicare il progetto a scenari EM del mondo reale e anche con utenti di diverse organizzazioni, che hanno infine riportato la loro esperienza. 
+
+Per quanto riguarda gli studenti, sono stati definiti 24 team per un totale di 44 studenti esperti di Python, ma non di EM. 
+
+E' stato chiesto loro di trovare siti ricchi di dati da estrarre ed infine convertire in tabelle relazionali, per poi applicare Magellano per effettuare il matching tra queste tabelle (si noti che team diversi potevano lavorare nello stesso dominio, ma su siti differenti). 
+
+Lo scenario EM utilizzato per questa valutazione prevede supervised learning seguito da regole, con una precisione richiesta del 90\%. 
+
+Inizialmente è stato eseguito il task senza utilizzare Magellano, in questo modo è stato possibile sottolinearne l'efficacia ed i miglioramenti apportati rispetto alla baseline.
+
+Per quanto riguarda le organizzazioni coinvolte, esse sono il WalmartLabs, Marshfield Clinic e Johnson Control, ognuno dei quali ha applicato Magellano nei rispettivi domini.
+
+% Di fronte a 12 domini diversi, tabelle con circa 7000 tuple in media e tra i 5 e 17 attributi ed uno scenario di supervised learning seguito da regole, con un precisione del 90% e una recall più alta possibile.
+% Si è dimostrato che la guida introdotta dal progetto è risultata utile ai fini dell'esperimento, così come gli step di blocking e debugging, in quest ultimo caso il debugger di Magellano ha aiutato nella pulizia dei dati, nel trovare il tipo di blocker corretto, il tuning dei suoi parametri. Nella fase di matching, gli utenti hanno iterativamente debuggato il matcher così da migliorarne l'accuratezza, eseguendo selezione delle features, pulizia dei dati e tuning dei parametri. Aumentando precisione e recall rispettivamente del 20% e 25% circa. Aggiungendo le regole ci sono state ulteriori miglioramenti, infatti la precisione ha raggiunto il 90% stabilito. Un miglioramento significativo è stato ottenuto nell'esperimento con le aziende, che hanno riscontrato un aumento della recall del 34% e un piccolo peggioramento della precisione, dovuta al proxy debugging di Magellano.
