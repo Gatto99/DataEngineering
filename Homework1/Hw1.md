@@ -1,3 +1,5 @@
+# La soluzione Data-Centric
+
 Andrew NG, globalmente riconosciuto nel mondo dell'intelligenza artificiale, ha identificato un grande cambiamento in questo ambito: sostiene che l'uso dei modelli *data-centric*, per cui è sufficiente avere a disposizione pochi dati ma di qualità, sia una soluzione migliore rispetto ad avere un dataset con molti dati, usato per addestrare un modello che successivamente si pensa a migliorare per ottenere risultati migliori (approccio *model-centric*). Quindi, secondo Andrew NG, collezionare sempre più dati risulta costoso e meno efficace che occuparsi dell'ingegnerizzazione dei dati (che quindi prevede la pulizia di quest'ultimi) e, poiché è un approccio già adottato, per evitare che rimanga solo un'intuizione, crede necessario che esso diventi sistematico.
 
 <!--## Foundation models
@@ -22,3 +24,5 @@ E' dunque furbo ed efficace risolvere i problemi specifici cercando di dare in p
 
 <!--## Dati sintetici
 Potrebbero essere utili ma userebbe metodologie che risultano più facili come il data augmentation che prevede di applicare trasformazioni reali a dati per ottenerne degli altri ingrandendo il data set a disposizione.-->
+
+(Fonte: [Andrew Ng's IEEE Spectrum Interview](https://spectrum.ieee.org/andrew-ng-data-centric-ai)
