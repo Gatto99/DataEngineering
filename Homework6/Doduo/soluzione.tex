@@ -1,0 +1,11 @@
+Il progetto in questione definisce un nuovo stato dell'arte circa il problema dell'annotazione di colonne presenti nelle tabelle. Stiamo parlando di Doduo, una soluzione ai problemi precedentemente accennati, che fa leva su un modello unificato per la predizione simultanea di entrambi i task: Doduo è un "joint multi-task framework" basato su modelli linguistici (LM) pre-addestrati e su Trasformer, che prende in input l'intera tabella, impara a rappresentare le colonne, incorpora il contesto della tabella, gestisce uniformemente i task di annotazione delle colonne e, ancora più importante, condivide i parametri tra i due task. 
+
+L'input è quindi rappresentato da valori presenti nelle diverse colonne in tabella, esso viene poi serializzato dando importanza tanto ai dati in una colonna quanto ai dati di tutte le colonne (da qui il nome di sistema multi-colonna); l'output si può quindi ottenere conoscendo solo il contenuto della tabella e senza i relativi metadati. In questo modo si concretizza un'ulteriore peculiarità del sistema, cioè quello di essere flessibile ed applicabile in diversi contesti, anche quelli in cui non sono previste queste informazioni aggiuntive. 
+
+Per ottenere questo comportamento il modello si stabilisce in un ambiente supervisionato, in cui la classificazione multi classe per i tipi e le relazioni delle colonne, viene eseguita tenendo conto di vocabolari dipendenti dall'applicazione in cui si utilizza il modello.
+
+L'architettura, più nello specifico, prevede l'uso di una pila di blocchi Transformer che danno al sistema la capacità di generare embedding contestualizzati per le celle di una tabella, colonne o righe. Inoltre, modelli di questo tipo (pre-addestrati su grandi corpi testuali) possono memorizzare una conoscenza semantica dal testo usato per l'addestramento, sotto forma di parametri del modello, quindi anche il significato sintattico e semantico delle parole.
+
+In più, il meccanismo di attenzione tipico di modelli linguistici pre-addestrati, permette di discernere la polisemia (stesse parole rappresentate da vettori diversi in base al contesto) e i sinonimi (rappresentati da vettori simili).
+
+Si noti che Doduo funzioni correttamente anche con pochi dati, o comunque meno di quanti ne sono richiesti da modelli alternativi.

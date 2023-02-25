@@ -1,0 +1,12 @@
+Il problema di Entity matching (EM), ha ricevuto molta attenzione negli ultimi anni. 
+% Uno scenario comune in questo ambito è quello di trovare coppie di tuple che matchino e che quindi si riferiscono alla stessa entità del mondo reale.
+L'obiettivo in questo caso risulta essere, oltre al migliorare l'accuratezza, anche quello di ridurrne i costi. Nonostante questo, non si è lavorato direttamente, e sufficientemente, sui sistemi di EM, al contrario il grande sforzo è stato fatto solo per migliorare gli algoritmi di matching. 
+
+Di conseguenza, questo non ha permesso di superare le limitazioni che affliggono questi sistemi e che ne prevengono un utilizzo diffuso: 
+
+\begin{enumerate}
+    \item Gli utenti dovrebbero poter iniziare, e concludere, il processo di EM che è a sua volta composto da tanti step (dal blocking al matching, passando per il cleaning dei dati ecc.), sebbene ci sia questa necessità, i sistemi EM non ricoprono l'intera pipline, ma solo pochi di questi step.
+    \item Ogni step può far utilizzo di molte tecniche, ma incorporarle e sfruttarle tutte in un singolo sistema risulta difficile e l'alternativa che prevede di spostare i dati da un sistema ad un altro (ognuno focalizzato su un solo step) risulta inefficiente. Per di più, molti sistemi EM sono monoliti che non si integrano con altri esterni. L'espansione di questi sistemi risulta quindi essere una caratteristica tanto importante quanto difficile da ottenere. Inizialmente si potrebbe pensare che essa sia futile di fronte ad un unico sistema  generico funzionante, ma è molto complesso realizzarne uno, così come mantenerlo e fare in modo che possa avere performance equivalenti per tanti domini diversi.
+    \item Sarebbe anche necessario permettere all'utilizzatore di scrivere degli script in un ambiente interattivo per risolvere bug e aggiungere funzionalità. Però solo pochi sistemi lo permettono.
+    \item Infine l'ultimo problema, non per importanza, solleva una criticità relativa all'usabilità di questi sistemi, per cui in molti scenari, molti utenti non sono a conoscenza di cosa devono fare e come lo devono fare e i sistemi non procurano una risposta a queste domande.
+\end{enumerate}

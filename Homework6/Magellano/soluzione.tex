@@ -1,0 +1,28 @@
+La soluzione proposta dal progetto analizzato, risolve le problematiche precedentemente accennate offrendo nuovi sistemi avanzati, per cui non si punta a realizzare un singolo sistema che gestisca tutti gli scenari (distinguibili sulla base del problema, della soluzione, del dominio e delle performance), piuttosto si definisce un insieme di sistemi, ognuno che gestisce un insieme definito di scenari simili. 
+
+Magellano, è quindi un tentativo di realizzare un Entity Matching Managment System, che quindi gestisce tutti gli aspetti del processo end-to-end di EM.
+
+Di seguito si elencano le soluzioni proposte dal progetto per i problemi sopra accennati:
+
+\begin{enumerate}
+    \item Procura tools che aiutano ad eseguire tutti gli step, cercando di ricoprire tutta la pipeline.
+    \item Si distingue dai sistemi monoliti correnti, poiché integra l'utilizzo di Python e del suo ecosistema, permettendo l'uso di differenti tecnologie con cui ricoprire l'intera pipeline e i relativi steps. Il progetto in questione punta, infatti, a trovare un alternativa ai sistemi "chiusi", introducendone uno che si interfacci facilmente con altre tecnologie e sistemi (come i pacchetti Python), permettendo l'utilizzo di tecniche già note e sviluppato negli anni per colmare le lacune relative agli step di learning, mining, visualization, cleaning, etc. Coerentemente con questa scelta, la struttra dati che è stata utilizzata è quella dei data frame (introdotti con Pandas), che svincolano il progetto da problematiche inerenti a strutture alternative (come la classe MDataFrame che eredita dai data frame), le quali rendono difficile l'interoperabilità di Magellano con sistemi esterni, a favore di una struttura più comune e quindi conosciuta anche da essi. Il lato negativo di questa scelta, è l'incapacità di gestire metadati tramite data frame. Per questo motivo è stato introdotto un catalogo contenente queste informazioni, che devono però essere mantenute consistenti, quindi sono stati riscritti "from scratch" i comandi offerti all'utente, evitando che vengano introdotte inconsistenze tramite controlli su vincoli che devono essere verificati.
+    \item E' un progetto situato all'interno di un ambiente di scripting interattivo.
+    \item Propone una guida per l'utente circa le azioni da intraprendere per ogni step in ogni scenario. A questa guida si affianca un insieme di strumenti di supporto che si traducono in comandi Python.
+\end{enumerate}
+
+Quindi, la realizzazione di Magellano si basa su due stages: stage di sviluppo e stage di produzione. Ognuno di essi supportato da differenti tools, quelli relativi al primo stage sono costruiti in cima ad uno stack Python di analisi dei dati (inclusivo di pacchetti come Numpy, Scipy, Pandas, Scikit-learn, etc.), gli altri su uno stack Python di Big Data (e.g. Pydoop, mrjob, etc.). 
+
+Gli obiettivi che si vogliono raggiungere nei due stage sono, rispettivamente, definire il workflow con la migliore accuracy ed utilizzarlo sui dati in produzione (nel secondo stage), cercando di sceglierne uno facilmente scalabile, data la quantità notevole di dati su cui è probabile che il sistema verrà usato.
+
+Si noti che il workflow è caratterizzato da una serie di step: 
+
+\begin{enumerate}
+    \item campionamento delle tabelle
+    \item blocking (il miglior blocker è selezionato grazie al debugger)
+    \item campionamento e labeling di coppie di tuple (ottenuto grazie allo step precedente, ma non presente in fase di produzione)
+    \item selezione del matcher migliore (con accuratezza maggior ed eventualmente anche più facile da debuggare)
+    \item debugging del matcher per migliorarne l'accuratezza (identificando i suoi sbagli, categorizzandoli ed aggiustando il suo comportamento)
+\end{enumerate}
+N.B. Se il matcher scelto non ha un debugger associato, si debugga un matcher alternativo per individuare i problemi derivati dai dati, dalle features e dalle labels. Qualora qualcuno di essi venisse modificato per risolvere il problema, potrebbe essere necessario selezionare un altro matcher.
+
