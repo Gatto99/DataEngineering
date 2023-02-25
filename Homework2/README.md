@@ -16,5 +16,7 @@ Di seguito degli esempi:
 - *filename: Full*
 - *content: "stars"*
 
+P.S. Le scelte prese circa l'indicizzazione sono descritte nel [file LaTex](./LyriRet.tex), altrimenti è consigliabile leggere il [README](./LyriRet/README.md) del progetto LyriRet
+
 ### Tecnologie e versioni
 <!--TODO-->
