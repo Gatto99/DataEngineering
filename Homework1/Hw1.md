@@ -25,4 +25,4 @@ E' dunque furbo ed efficace risolvere i problemi specifici cercando di dare in p
 <!--## Dati sintetici
 Potrebbero essere utili ma userebbe metodologie che risultano più facili come il data augmentation che prevede di applicare trasformazioni reali a dati per ottenerne degli altri ingrandendo il data set a disposizione.-->
 
-(Fonte: [Andrew Ng's IEEE Spectrum Interview](https://spectrum.ieee.org/andrew-ng-data-centric-ai)
+(Fonte: [Andrew Ng's IEEE Spectrum Interview](https://spectrum.ieee.org/andrew-ng-data-centric-ai))
