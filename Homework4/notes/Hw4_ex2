@@ -1,0 +1,784 @@
+CALCIATORI DELL'INTER
+
+Siti:
+1. https://www.transfermarkt.it/inter-mailand/startseite/verein/46/saison_id/2022
+2. https://www.inter.it/it/teams/prima-squadra?role=tutti
+3. https://sport.virgilio.it/calcio/giocatori/
+4. https://www.tuttocalciatori.net/rosa/f.c.-internazionale
+5. https://www.footballdatabase.eu/en/club/team/16-inter_milan/2022-2023
+
+Sono stati fatti testi su giocatori con ruolo differente, così da verificare che le espressioni funzionassero indipendentemente dal ruolo (e anche dalla squadra)	
+
+-------------------------------TRANFERMARKET-------------------------------
+[XPATH]
+a. Nome e Cognome = $x("//header[contains(@itemtype,'https://schema.org/Person')]/div/h1/strong/text()") 
+[SOLO COGNOME]
+b. Data di nascita = $x("(//span[text()='Data di nascita:']/following-sibling::span)[1]/a/text()")
+c. Posizione = $x("(//span[text()='Posizione:']/following-sibling::span)[1]/text()")
+d. Piede = $x("(//span[text()='Piede:']/following-sibling::span)[1]/text()")
+e. Presenze = $x("//span[text()='Partite']/parent::div/following-sibling::a/text()")
+f. Gol = $x("//span[text()='Reti']/parent::div/following-sibling::a/text()")
+g. Assist = $x("//span[text()='Assist']/parent::div/following-sibling::a/text()")
+h. Ammonizioni = $x("//span[text()='Ammonizioni']/parent::div/following-sibling::a/text()")
+i. Espulsioni = $x("//span[text()='Espulsioni']/parent::div/following-sibling::a/text()")
+l. Valore di mercato = $x("//div[text()='Valore attuale:']/following-sibling::div/a/text()")
+
+1.) [TRANSFERMARKET]
+Pagine:
+	1.1 https://www.transfermarkt.it/alessandro-bastoni/profil/spieler/315853
+		a. Ok - solo nome
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.2 https://www.transfermarkt.it/lautaro-martinez/profil/spieler/406625
+		a. Ok - solo nome
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.3 https://www.transfermarkt.it/edin-dzeko/profil/spieler/28396
+		a. Ok - solo nome
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.4 https://www.transfermarkt.it/henrikh-mkhitaryan/profil/spieler/55735
+		a. Ok - solo nome
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.5 https://www.transfermarkt.it/nicolo-barella/profil/spieler/255942
+		a. Ok - solo nome
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.6 [https://www.transfermarkt.it/samir-handanovic/profil/spieler/28021]
+		a. Ok - solo nome
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+------------------------------------------------------------------------
+a. Nome E Cognome = $x("//header[contains(@itemtype,'https://schema.org/Person')]/div/h1/span/following-sibling::text()[1] | //header[contains(@itemtype,'https://schema.org/Person')]/div/h1/span/following-sibling::strong/text()")
+------------------------------------------------------------------------
+[XPATH]
+a. Nome e Cognome = $x("//header[contains(@itemtype,'https://schema.org/Person')]/div/h1/span/following-sibling::text()[1] | //header[contains(@itemtype,'https://schema.org/Person')]/div/h1/span/following-sibling::strong/text()")
+b. Data di nascita = $x("(//span[text()='Data di nascita:']/following-sibling::span)[1]/a/text()")
+c. Posizione = $x("(//span[text()='Posizione:']/following-sibling::span)[1]/text()")
+d. Piede = $x("(//span[text()='Piede:']/following-sibling::span)[1]/text()")
+e. Presenze = $x("//span[text()='Partite']/parent::div/following-sibling::a/text()")
+f. Gol = $x("//span[text()='Reti']/parent::div/following-sibling::a/text()")
+g. Assist = $x("//span[text()='Assist']/parent::div/following-sibling::a/text()")
+h. Ammonizioni = $x("//span[text()='Ammonizioni']/parent::div/following-sibling::a/text()")
+i. Espulsioni = $x("//span[text()='Espulsioni']/parent::div/following-sibling::a/text()")
+l. Valore di mercato = $x("//div[text()='Valore attuale:']/following-sibling::div/a/text()")
+
+1.) [TRANSFERMARKET]
+Pagine:
+	1.1 https://www.transfermarkt.it/alessandro-bastoni/profil/spieler/315853
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.2 https://www.transfermarkt.it/lautaro-martinez/profil/spieler/406625
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.3 https://www.transfermarkt.it/edin-dzeko/profil/spieler/28396
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.4 https://www.transfermarkt.it/henrikh-mkhitaryan/profil/spieler/55735
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.5 https://www.transfermarkt.it/nicolo-barella/profil/spieler/255942
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+	1.6 https://www.transfermarkt.it/samir-handanovic/profil/spieler/28021
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		f. Ok
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------------INTER SITE-------------------------------
+[XPATH]
+a. Nome e Cognome = $x("//div[contains(@class,'css-1riajt')]/div[contains(@class,'css-79elbk')]/h1[contains(@class,'css-oq49di')]/span/text()")
+b. Eta = $x("//p[text()='Età']/preceding-sibling::p/text()")
+. Posizione
+. Piede
+c. Presenze = $x("//p[text()='Partite giocate']/following-sibling::p/span/text()")
+e. Gol = $x("//p[text()='Gol segnati']/following-sibling::p/span/text()")
+. Assist =
+f. Ammonizioni = $x("//p[text()='Cartellini gialli']/following-sibling::p/span/text()")
+g. Espulsioni = $x("//p[text()='Cartellini rossi']/following-sibling::p/span/text()")
+d. Altezza = $x("(//p[text()='Altezza']/preceding-sibling::p/text())[1]")
+h. Contrasti vinti = $x("//p[text()='Contrasti vinti']/following-sibling::p/span/text()")
+i. Disimpegni = $x("//p[text()='Disimpegni']/following-sibling::p/span/text()")
+j. Ruolo = $x("//span[contains(@class,'css-jpejlw')]/text()")
+
+1.) [INTER SITE]
+Pagine:
+	1.1 [https://www.inter.it/it/squadra/prima-squadra/stefan-de-vrij]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.2 [https://www.inter.it/it/squadra/prima-squadra/raoul-bellanova]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.3 [https://www.inter.it/it/squadra/prima-squadra/francesco-acerbi]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.4 [https://www.inter.it/it/squadra/prima-squadra/dimarco]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.5 [https://www.inter.it/it/squadra/prima-squadra/milan-skriniar]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.6 [https://www.inter.it/it/squadra/prima-squadra/hakan-calhanoglu]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.7 [https://www.inter.it/it/squadra/prima-squadra/lautaro-martinez]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.8 [https://www.inter.it/it/squadra/prima-squadra/andre-onana]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-----------------------------SPORT VIRGILIO-----------------------------
+[XPATH]
+a. Nome e Cognome = $x("//h1[contains(@class, 'title-page')]/text()")
+b. Età = $x("//b[text()='Età:']/following-sibling::text()")
+. Posizione = $x("//*[contains(text(), 'Ruolo')]/following-sibling::text()")
+e. Piede = $x("//b[text()='Piede preferito:']/following-sibling::text()")
+. Presenze = $x("//ul[@id='stats-leagues']//*[contains(text(),'Partite disputate')]/preceding-sibling::*/text()")
+i. Gol = $x("(//span[text()='Gol fatti']/preceding-sibling::span/text())[1]")
+l. Assist = $x("(//span[text()='Assist']/preceding-sibling::span/text())[1]")
+. Ammonizioni = $x("//ul[@id='stats-leagues']//*[contains(text(),'Cartellini gialli')]/preceding-sibling::*/text()")
+. Espulsioni = $x("//ul[@id='stats-leagues']//*[contains(text(),'Cartellini rossi')]/preceding-sibling::*/text()")
+c. Nazionale = $x("//b[text()='Nazionale:']/following-sibling::text()")
+d. Nazionalità = $x("//b[text()='Nazionalità:']/following-sibling::text()")
+f. Peso = $x("//b[text()='Peso:']/following-sibling::text()")
+g. Numero maglia = $x("(//span[text()='Numero di maglia']/preceding-sibling::span/text())[1]")
+h. Minuti giocati = $x("(//span[text()='Minuti giocati']/preceding-sibling::span/text())[1]")
+
+
+1.) [SPORT VIRGILIO]
+Pagine:
+	1.1 [https://sport.virgilio.it/calcio/giocatori/robin_gosens/]
+		a. Ok
+		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		l. Ok
+		. Ok
+		. Ok
+		c. Ok
+		d. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+	1.2 [https://sport.virgilio.it/calcio/giocatori/marcelo_brozovic/]
+		a. Ok
+		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		. Ok
+		. Ok
+		l. Ok
+		c. Ok
+		d. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+	1.3 [https://sport.virgilio.it/calcio/giocatori/matteo_darmian/]
+		a. Ok
+		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		. Ok
+		. Ok
+		l. Ok
+		c. - Non è definita la nazionalità
+		d. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+	1.4 [https://sport.virgilio.it/calcio/giocatori/joaquin_correa/]
+		a. Ok
+		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		. Ok
+		. Ok
+		l. Ok
+		c. - Non è definita la nazionalità
+		d. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+	1.5 [https://sport.virgilio.it/calcio/giocatori/romelu_lukaku/]
+		a. Ok
+		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		. Ok
+		. Ok
+		l. Ok
+		c. Ok
+		d. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+	1.6 [https://sport.virgilio.it/calcio/giocatori/samir_handanovic/]
+		a. Ok
+		b. Ok
+		. Ok
+		e. Ok
+		i. [] non se ne tiene conto (è un portiere)
+		. Ok
+		. Ok
+		l. Ok
+		c. - non definita nel sito
+		d. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+	1.7 [https://sport.virgilio.it/calcio/giocatori/johan_vasquez/] per verificare che funzioni anche con giocatori di altre squadre
+		a. Ok
+		b. Ok
+		. Ok
+		e. Ok
+		. Ok
+		i. Ok
+		. Ok
+		. Ok
+		l. Ok
+		c. - Non è definita la nazionalità
+		d. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-----------------------------TUTTOCALCIATORI----------------------------
+[XPATH]
+a. Nome e Cognome = $x("//h1/text()")
+b. Età = $x("//td[text()='Età']/following-sibling::td/text()")
+c. Ruolo = $x("(//strong[text()='RUOLO']/following-sibling::text())[1]")
+d. Piede = $x("(//strong[text()='PIEDE CALCIO']/following-sibling::text())[1]")
+e. Scadenza contratto = $x("(//strong[text()='SCADENZA CONTRATTO']/following-sibling::text())[1]")
+f. Procuratore = $x("(//strong[text()='PROCURATORE']/following-sibling::text())[1]")
+g. Esordio in nazionale = $x("(//strong[text()='ESORDIO IN NAZIONALE']/following-sibling::text())[1]")
+h. Presenze in nazionale = $x("(//strong[text()='PRESENZE IN NAZIONALE']/following-sibling::text())[1]")
+i. Presenze nei campionati = $x("//tr[contains(@class,'tr_campionato totale')]/td[4]/text()")
+l. Gol 2022-2023 in Serie A=  $x("//tr[contains(@class,'tr_campionato')]/td[text()='2022-2023']/following-sibling::td[4]/strong/text()")
+
+1.) [TUTTOCALCIATORI]
+Pagine:
+	1.1 [https://www.tuttocalciatori.net/Onana_Andr%E8]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+	1.2 [https://www.tuttocalciatori.net/Handanovic_Samir]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+	1.3 [https://www.tuttocalciatori.net/Cordaz_Alex]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+	1.4 [https://www.tuttocalciatori.net/?mod=cc1&par=5646]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+	1.5 [https://www.tuttocalciatori.net/Asllani_Kristjan]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Due valori ==> ERRORE
+	1.6 [https://www.tuttocalciatori.net/Dzeko_Edin]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+	1.7 [https://www.tuttocalciatori.net/Dybala_Paulo] per verificare che funzioni anche con giocatori di altre squadre
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+---------------------RISOLTO GOAL---------------------------------------
+Gol = $x("(//tr[contains(@class,'tr_campionato')]/td[text()='2022-2023']/following-sibling::td[4]/strong/text())[1]")
+
+provato anche su 
+- https://www.tuttocalciatori.net/Zaniolo_Nicol%F2
+- https://www.tuttocalciatori.net/Zalewski_Nicola
+- https://www.tuttocalciatori.net/Abraham_Tammy
+------------------------------------------------------------------------
+[XPATH]
+a. Nome e Cognome = $x("//h1/text()")
+b. Età = $x("//td[text()='Età']/following-sibling::td/text()")
+c. Ruolo = $x("(//strong[text()='RUOLO']/following-sibling::text())[1]")
+d. Piede = $x("(//strong[text()='PIEDE CALCIO']/following-sibling::text())[1]")
+. Presenze = $x("//*[contains(@class,'tr_campionato')]/*[contains(text(),'2022-2023')]/following-sibling::td[3]//text()")
+e. Scadenza contratto = $x("(//strong[text()='SCADENZA CONTRATTO']/following-sibling::text())[1]")
+f. Procuratore = $x("(//strong[text()='PROCURATORE']/following-sibling::text())[1]")
+g. Esordio in nazionale = $x("(//strong[text()='ESORDIO IN NAZIONALE']/following-sibling::text())[1]")
+h. Presenze in nazionale = $x("(//strong[text()='PRESENZE IN NAZIONALE']/following-sibling::text())[1]")
+i. Presenze nei campionati = $x("//tr[contains(@class,'tr_campionato totale')]/td[4]/text()")
+l. Gol 2022-2023 in Serie A=  $x("(//tr[contains(@class,'tr_campionato')]/td[text()='2022-2023']/following-sibling::td[4]/strong/text())[1]")
+. Ammonizioni = $x("(//*[contains(@class,'tr_campionato')]/*[contains(text(),'2022-2023')]/following-sibling::td[7])[1]//text()")
+. Espulsioni = $x("(//*[contains(@class,'tr_campionato')]/*[contains(text(),'2022-2023')]/following-sibling::td[8])[1]//text()")
+
+1.) [TUTTOCALCIATORI]
+Pagine:
+	1.1 [https://www.tuttocalciatori.net/Onana_Andr%E8]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+	1.2 [https://www.tuttocalciatori.net/Handanovic_Samir]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+	1.3 [https://www.tuttocalciatori.net/Cordaz_Alex]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+	1.4 [https://www.tuttocalciatori.net/?mod=cc1&par=5646]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+	1.5 [https://www.tuttocalciatori.net/Asllani_Kristjan]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+	1.6 [https://www.tuttocalciatori.net/Dzeko_Edin]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+	1.7 [https://www.tuttocalciatori.net/Dybala_Paulo] per verificare che funzioni anche con giocatori di altre squadre
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+		j. Ok
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------------FOOTBALLDB-------------------------------
+[XPATH]
+a. Nome e Cognome = $x("//h1/span[contains(@class,'lastname')]/..//text()")
+[ritorna una lista, cui primo elemento è il nome e il secondo è il cognome RIFALLO PER NOME E COGNOME PRIMO SITO]
+b. Squadra = $x("//div[contains(@class,'clublogo')]/a/text()")
+c. Goals = $x("//div[contains(@class,'s_goals')]/span[1]/text()")
+d. Minuti giocati =
+e. Cartellini gialli = 
+f. Peso = 
+g. Piede = 
+h. Posizione = 
+
+
+1.) [FOOTBALLDB]
+Pagine:
+	1.1 [https://www.footballdatabase.eu/en/player/details/279784-lautaro-martinez] 
+		a. Ok
+		b. Ok
+		c. [] ==> Errore, i goals per gli attaccanti sono posizionati diversamente dagli altri calciatori
+		d. 
+		e. 
+		f. 
+		g. 
+		h. 
+		i. 
+	1.2 [https://www.footballdatabase.eu/en/player/details/70663-romelu-lukaku]
+		a. Ok
+		b. Ok
+		c. [] ==> Errore, i goals per gli attaccanti sono posizionati diversamente dagli altri calciatori
+		d. 
+		e. 
+		f. 
+		g. 
+		h. 
+		i. 
+	1.3 [https://www.footballdatabase.eu/en/player/details/252538-nicolo-barella]
+		a. 
+		b. 
+		c. 
+		d. 
+		e. 
+		f. 
+		g. 
+		h. 
+		i. 
+	1.4 [https://www.footballdatabase.eu/en/player/details/112559-marcelo-brozovic]
+		a. 
+		b. 
+		c. 
+		d. 
+		e. 
+		f. 
+		g. 
+		h. 
+		i. 
+	1.5 [https://www.footballdatabase.eu/en/player/details/223558-robin-gosens]
+		a. 
+		b. 
+		c. 
+		d. 
+		e. 
+		f. 
+		g. 
+		h. 
+		i. 
+---------------------------RISOLTO GOAL XPATH--------------------------
+c. Goals = $x("//span[text()='Goals']/preceding-sibling::span[1]/text()")
+-----------------------------------------------------------------------
+[XPATH]
+a. Nome e Cognome = $x("//h1/span[contains(@class,'lastname')]/..//text()")
+[ritorna una lista, cui primo elemento è il nome e il secondo è il cognome RIFALLO PER NOME E COGNOME PRIMO SITO]
+. Età = $x("//*[@class='age']/text()")
+b. Squadra = $x("//div[contains(@class,'clublogo')]/a/text()")
+c. Goals = $x("//span[text()='Goals']/preceding-sibling::span[1]/text()")
+d. Minuti giocati = $x("//span[text()='Minutes played']/preceding-sibling::span[1]/text()")
+e. Cartellini gialli = $x("//span[text()='Yellow cards']/preceding-sibling::span[1]/text()")
+f. Peso = $x("//span[contains(text(),'Weight')]/following-sibling::text()")
+[CAMBIA TUTTI I TESTI IN CONTAINS???]
+g. Piede = $x("//span[contains(text(),'Best foot')]/following-sibling::text()")
+h. Posizione = $x("//tr[contains(@class,'mainposition') or contains(@class,'otherposition')]/td[1]/text()")
+[ELENCO TUTTE LE POSIZIONI]
+. Presenze = $x("//*[contains(text(),'Played matches')]/preceding-sibling::*/text()")
+e. Cartellini rossi = $x("//span[text()='Red cards']/preceding-sibling::span[1]/text()")
+
+
+1.) [FOOTBALLDB]
+Pagine:
+	Attaccanti:
+	1.1 [https://www.footballdatabase.eu/en/player/details/279784-lautaro-martinez] 
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.2 [https://www.footballdatabase.eu/en/player/details/70663-romelu-lukaku]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	Centrocampisti:
+	1.3 [https://www.footballdatabase.eu/en/player/details/252538-nicolo-barella]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.4 [https://www.footballdatabase.eu/en/player/details/112559-marcelo-brozovic]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.5 [https://www.footballdatabase.eu/en/player/details/223558-robin-gosens]
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	Difensori:
+	1.6 [https://www.footballdatabase.eu/en/player/details/110489-francesco-acerbi] 
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	Portieri:
+	1.7 [https://www.footballdatabase.eu/en/player/details/244843-andre-onana]
+		a. Ok
+		b. Ok
+		c. [] non tengono conto dei gol dei portieri
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	1.8 [https://www.footballdatabase.eu/en/player/details/11916-samir-handanovic]
+		a. Ok
+		b. Ok
+		c. [] non tengono conto dei gol dei portieri
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+	Giocatore di altra squadra:
+	1.9 [https://www.footballdatabase.eu/en/player/details/244461-gianluca-mancini] per verificare che funzioni anche con giocatori di altre squadre
+		a. Ok
+		b. Ok
+		c. Ok
+		d. Ok
+		e. Ok
+		f. Ok
+		g. Ok
+		h. Ok
+		i. Ok
+------------------------------------------------------------------------
+------------------------------------------------------------------------

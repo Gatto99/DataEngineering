@@ -1,0 +1,291 @@
+
+Tipologia di prodotti su amazon.it:
+Mensole per doccia
+
+Caratteristiche scelte:
+1. Materiale
+2. Colore
+3. Marchio
+4. Numero di scomparti
+5. Forma
+
+Estrazione:
+1. Nome prodotto
+2. Prezzo prodotto
+(
+ 2.1 prezzo intero
+ 2.2 prezzo scontato
+ 2.3 percentuale di sconto
+)
+3. le 5 caratteristiche precedenti
+
+Esercizio:
+Verificare che le espressioni XPath funzionino correttamente 
+su almeno altre 10 pagine di prodotti della stessa categoria
+
+
+XPath expressions:
+1. Nome prodotto = $x("//span[@id='productTitle']/text()")
+2. Prezzo prodotto = $x("//div[@id='apex_desktop_newAccordionRow']/div[@id='corePriceDisplay_desktop_feature_div']/div/span/span[contains(@class, 'a-offscreen')]/text()")
+3. Materiale = $x("//span[text()='Materiale']/ancestor::td/following-sibling::td/span/text()")
+4. Colore = $x("//span[text()='Colore']/ancestor::td/following-sibling::td/span/text()")
+5. Marchio = $x("//span[text()='Marchio']/ancestor::td/following-sibling::td/span/text()")
+6. Numero di scomparti = $x("//span[text()='Numero di scomparti']/ancestor::td/following-sibling::td/span/text()")
+7. Forma = $x("//span[text()='Forma']/ancestor::td/following-sibling::td/span/text()")
+
+Prova 1 [https://www.amazon.it/Antiruggine-Portasapone-Lavandino-Portaoggetti-18mm-27mm/dp/B09CP8FHT2/ref=zg_bs_731832031_sccl_1/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. [] Lo scompartimeno è indicato dal nome del prodotto = sono 2 pezzi
+7. [] Due anelli a forma di C scritto nel testo e non nella tabella delle caratteristiche
+
+Prova 2 [https://www.amazon.it/Cooeco-Mensola-Doccia-Appendere-Portaoggetti/dp/B09XMJV235/ref=zg_bs_731832031_sccl_2/259-1215578-3223537?psc=1]
+1. Ok
+2. [] ERRORE $x("//div[@id='apex_desktop_newAccordionRow']") NON LO TROVA
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. [] ERRORE
+
+Quindi proviamo con 
+2. Prezzo = $x("//div[@id='apex_desktop']/descendant::div[@id='corePriceDisplay_desktop_feature_div']/descendant::span[contains(@class, 'a-offscreen')]/text()")
+[Nella prova iniziale e nella prova 1 non va bene, perché riporta altri prezzi]
+          = $x("//div[@id='apex_desktop']/descendant::div[@id='corePriceDisplay_desktop_feature_div']/style[contains(@type, 'text/css')]/following-sibling::div/descendant::span[contains(@class, 'a-offscreen')]/text()")
+[Uguale a sopra]
+          
+--------------------------------------------------------RISOLTO PREZZO su prime 3--------------------------------------------------------
+2. Prezzo = $x("(//div[@id='apex_desktop']/descendant::div[@id='corePriceDisplay_desktop_feature_div']/descendant::span[contains(@class, 'a-offscreen')]/text())[1]")
+[RIPROPONGO COME SOPRA MA PRENDENDO IL PRIMO ELEMENTO]
+
+--------------------------------------------------------RISOLTO PREZZO su prime 3--------------------------------------------------------
+
+XPath expressions:
+1. Nome prodotto = $x("//span[@id='productTitle']/text()")
+2. Prezzo prodotto = $x("(//div[@id='apex_desktop']/descendant::div[@id='corePriceDisplay_desktop_feature_div']/descendant::span[contains(@class, 'a-offscreen')]/text())[1]")
+3. Materiale = $x("//span[text()='Materiale']/ancestor::td/following-sibling::td/span/text()")
+4. Colore = $x("//span[text()='Colore']/ancestor::td/following-sibling::td/span/text()")
+5. Marchio = $x("//span[text()='Marchio']/ancestor::td/following-sibling::td/span/text()")
+6. Numero di scomparti = $x("//span[text()='Numero di scomparti']/ancestor::td/following-sibling::td/span/text()")
+7. Forma = $x("//span[text()='Forma']/ancestor::td/following-sibling::td/span/text()")
+
+Prova 1 [https://www.amazon.it/Antiruggine-Portasapone-Lavandino-Portaoggetti-18mm-27mm/dp/B09CP8FHT2/ref=zg_bs_731832031_sccl_1/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. [] Lo scompartimeno è indicato dal nome del prodotto = sono 2 pezzi
+7. [] Due anelli a forma di C scritto nel testo e non nella tabella delle caratteristiche
+
+Prova 2 [https://www.amazon.it/Cooeco-Mensola-Doccia-Appendere-Portaoggetti/dp/B09XMJV235/ref=zg_bs_731832031_sccl_2/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. [] ==> ERRORE
+
+Prova 3 [https://www.amazon.it/Portaoggetti-Plastica-Polipropilene-Multifunzionale-Dimensioni/dp/B09YHK839K/ref=zg_bs_731832031_sccl_4/259-1215578-3223537?th=1]
+1. Ok
+2. 0€ ==> ERRORE prende il primo nella buy box che indica che puoi provarlo a 0€ per 7gg
+3. Ok
+4. Ok
+5. Ok
+6. [] però ci sta il numero di articoli che potrebbe essere considerato corrispondente al numero di scompartimenti NO
+7. [] non sembra avere una forma descritta
+
+--------------------------------------------------------RISOLTO PREZZO su prime 3--------------------------------------------------------
+2. Prezzo = $x("(//div[@id='centerCol']/descendant::div[@id='corePriceDisplay_desktop_feature_div']/style/parent::div/descendant::span[contains(@class,'a-offscreen')]/text())[1]")
+--------------------------------------------------------RISOLTO PREZZO su prime 3--------------------------------------------------------
+
+XPath expressions:
+1. Nome prodotto = $x("//span[@id='productTitle']/text()")
+2. Prezzo prodotto = $x("(//div[@id='apex_desktop']/descendant::div[@id='corePriceDisplay_desktop_feature_div']/descendant::span[contains(@class, 'a-offscreen')]/text())[1]")
+3. Materiale = $x("//span[text()='Materiale']/ancestor::td/following-sibling::td/span/text()")
+4. Colore = $x("//span[text()='Colore']/ancestor::td/following-sibling::td/span/text()")
+5. Marchio = $x("//span[text()='Marchio']/ancestor::td/following-sibling::td/span/text()")
+6. Numero di scomparti = $x("//span[text()='Numero di scomparti']/ancestor::td/following-sibling::td/span/text()")
+7. Forma = $x("//span[text()='Forma']/ancestor::td/following-sibling::td/span/text()")
+
+Prova 1 [https://www.amazon.it/Antiruggine-Portasapone-Lavandino-Portaoggetti-18mm-27mm/dp/B09CP8FHT2/ref=zg_bs_731832031_sccl_1/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. [] Lo scompartimeno è indicato dal nome del prodotto = sono 2 pezzi
+7. [] Due anelli a forma di C scritto nel testo e non nella tabella delle caratteristiche
+
+Prova 2 [https://www.amazon.it/Cooeco-Mensola-Doccia-Appendere-Portaoggetti/dp/B09XMJV235/ref=zg_bs_731832031_sccl_2/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. [] ==> ERRORE
+
+Prova 3 [https://www.amazon.it/Portaoggetti-Plastica-Polipropilene-Multifunzionale-Dimensioni/dp/B09YHK839K/ref=zg_bs_731832031_sccl_4/259-1215578-3223537?th=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. [] (numero di articoli sono diversi dal numero di scompartimenti)
+7. [] non sembra avere una forma descritta
+
+Prova 4 [https://www.amazon.it/pezzi-Mensola-Angolare-Doccia-Mensole/dp/B097D5CXQQ/ref=zg_bs_731832031_sccl_6/259-1215578-3223537?th=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. [] ==> ERRORE (ci sta scritto 'Forma ', come se ci fosse un carattere che non è uno spazio che non permette di matchare 'Forma' con 'Forma ')
+
+Prova 5 [https://www.amazon.it/Toski-acrilico-Dellacquazzone-Dellorganizzatore-Foratura/dp/B0B2RDBLNT/ref=zg_bs_731832031_sccl_12/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. []
+
+Prova 6 [https://www.amazon.it/Doccia-Mensole-Portaoggetti-BagnoOrganizzatore-Autoadesivo-Scaffale/dp/B098M691YV/ref=zg_bs_731832031_sccl_20/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. [] non c'è il marchio
+6. Ok
+7. [] ==> ERRORE
+
+--------------------------------------------------------RISOLTO FORMA--------------------------------------------------------
+7. Forma = $x("//span[contains(text(),'Forma')]/ancestor::td/following-sibling::td/span/text()")
+--------------------------------------------------------RISOLTO FORMA--------------------------------------------------------
+
+XPath expressions:
+1. Nome prodotto = $x("//span[@id='productTitle']/text()")
+2. Prezzo prodotto = $x("(//div[@id='apex_desktop']/descendant::div[@id='corePriceDisplay_desktop_feature_div']/descendant::span[contains(@class, 'a-offscreen')]/text())[1]")
+3. Materiale = $x("//span[text()='Materiale']/ancestor::td/following-sibling::td/span/text()")
+4. Colore = $x("//span[text()='Colore']/ancestor::td/following-sibling::td/span/text()")
+5. Marchio = $x("//span[text()='Marchio']/ancestor::td/following-sibling::td/span/text()")
+6. Numero di scomparti = $x("//span[text()='Numero di scomparti']/ancestor::td/following-sibling::td/span/text()")
+7. Forma = $x("//span[contains(text(),'Forma')]/ancestor::td/following-sibling::td/span/text()")
+
+Prova 1 [https://www.amazon.it/Antiruggine-Portasapone-Lavandino-Portaoggetti-18mm-27mm/dp/B09CP8FHT2/ref=zg_bs_731832031_sccl_1/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. [] non c'è
+7. [] non c'è
+
+Prova 2 [https://www.amazon.it/Cooeco-Mensola-Doccia-Appendere-Portaoggetti/dp/B09XMJV235/ref=zg_bs_731832031_sccl_2/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. Ok
+
+Prova 3 [https://www.amazon.it/Portaoggetti-Plastica-Polipropilene-Multifunzionale-Dimensioni/dp/B09YHK839K/ref=zg_bs_731832031_sccl_4/259-1215578-3223537?th=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. [] non c'è (numero di articoli sono diversi dal numero di scompartimenti)
+7. [] non c'è
+
+Prova 4 [https://www.amazon.it/pezzi-Mensola-Angolare-Doccia-Mensole/dp/B097D5CXQQ/ref=zg_bs_731832031_sccl_6/259-1215578-3223537?th=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. Ok
+
+Prova 5 [https://www.amazon.it/Toski-acrilico-Dellacquazzone-Dellorganizzatore-Foratura/dp/B0B2RDBLNT/ref=zg_bs_731832031_sccl_12/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. []
+
+Prova 6 [https://www.amazon.it/Doccia-Mensole-Portaoggetti-BagnoOrganizzatore-Autoadesivo-Scaffale/dp/B098M691YV/ref=zg_bs_731832031_sccl_20/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. [] non c'è
+6. Ok
+7. Ok
+
+Prova 7 [https://www.amazon.it/ZUNTO-Mensola-Doccia-Autoadesivo-Mensole-Bagno-Organizzatore/dp/B07YDD1HX5/ref=zg_bs_731832031_sccl_2/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. Ok
+
+Prova 8 [https://www.amazon.it/SHBaizoy-perforazione-Ajustable-telescopico-Portasapone/dp/B0B6C98DB8/ref=zg_bs_731832031_sccl_3/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. [] non c'è
+5. Ok
+6. Ok
+7. [] non c'è
+
+Prova 9 [https://www.amazon.it/Multiply-X-portaoggetti-Anti-ruggine-anodizzato-detergente/dp/B06XHTMPR1/ref=zg_bs_731832031_sccl_44/259-1215578-3223537?psc=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. [] non c'è
+
+Prova 10 [https://www.amazon.it/Kallrra-Mensola-Angolare-Acciaio-Portasapone/dp/B09FP98NWM/ref=zg_bs_731832031_sccl_50/259-1215578-3223537?th=1]
+1. Ok
+2. Ok
+3. Ok
+4. Ok
+5. Ok
+6. Ok
+7. [] non c'è
+
+Alla fine ho modificato tutte le espressioni, inserendo non l'uguaglianza, bensì il contains.
+
+XPath expressions:
+1. Nome prodotto = $x("//span[@id='productTitle']/text()")
+2. Prezzo prodotto = $x("(//div[@id='apex_desktop']/descendant::div[@id='corePriceDisplay_desktop_feature_div']/descendant::span[contains(@class, 'a-offscreen')]/text())[1]")
+3. Materiale = $x("//span[contains(text(),'Materiale')]/ancestor::td/following-sibling::td/span/text()")
+4. Colore = $x("//span[contains(text(),'Colore')]/ancestor::td/following-sibling::td/span/text()")
+5. Marchio = $x("//span[contains(text(),'Marchio')]/ancestor::td/following-sibling::td/span/text()")
+6. Numero di scomparti = $x("//span[contains(text(),'Numero di scomparti')]/ancestor::td/following-sibling::td/span/text()")
+7. Forma = $x("//span[contains(text(),'Forma')]/ancestor::td/following-sibling::td/span/text()")
+
+Modificato Prezzo e altre espressioni
+
+1. Nome prodotto = $x("//span[@id='productTitle']/text()")
+2. Prezzo prodotto = $x("(//div[@id='corePriceDisplay_desktop_feature_div']//span[contains(@class,'a-offscreen')])[1]/text()")
+3. Materiale = $x("//tr[contains(@class,'po-material')]/td[contains(@class,'a-span9')]/span/text()")
+4. Colore = $x("//tr[contains(@class,'po-color')]/td[contains(@class,'a-span9')]/span/text()")
+5. Marchio = $x("//tr[contains(@class,'po-brand')]/td[contains(@class,'a-span9')]/span/text()")
+6. Numero di scomparti = $x("//tr[contains(@class,'po-number_of_compartments')]/td[contains(@class,'a-span9')]/span/text()")
+7. Forma = $x("//tr[contains(@class,'po-item_shape')]/td[contains(@class,'a-span9')]/span/text()")
